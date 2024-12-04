@@ -1,0 +1,478 @@
+basePath: /api/v1
+definitions:
+  github_com_sherwin-77_go-echo-template_internal_http_dto.ChangeRoleRequest:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.ChangeRoleRequestItem'
+        type: array
+      userID:
+        type: string
+    required:
+    - items
+    - userID
+    type: object
+  github_com_sherwin-77_go-echo-template_internal_http_dto.ChangeRoleRequestItem:
+    properties:
+      action:
+        enum:
+        - add
+        - remove
+        type: string
+      id:
+        type: string
+    required:
+    - action
+    - id
+    type: object
+  github_com_sherwin-77_go-echo-template_internal_http_dto.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  github_com_sherwin-77_go-echo-template_internal_http_dto.RoleRequest:
+    properties:
+      auth_level:
+        type: integer
+      name:
+        type: string
+    required:
+    - auth_level
+    - name
+    type: object
+  github_com_sherwin-77_go-echo-template_internal_http_dto.RoleResponse:
+    properties:
+      auth_level:
+        type: integer
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  github_com_sherwin-77_go-echo-template_internal_http_dto.UpdateRoleRequest:
+    properties:
+      auth_level:
+        type: integer
+      id:
+        type: string
+      name:
+        type: string
+    required:
+    - auth_level
+    - id
+    - name
+    type: object
+  github_com_sherwin-77_go-echo-template_internal_http_dto.UpdateUserRequest:
+    properties:
+      email:
+        type: string
+      id:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - id
+    type: object
+  github_com_sherwin-77_go-echo-template_internal_http_dto.UserRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - password
+    - username
+    type: object
+  github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse:
+    properties:
+      email:
+        type: string
+      id:
+        type: string
+      roles:
+        items:
+          $ref: '#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.RoleResponse'
+        type: array
+      username:
+        type: string
+    type: object
+  github_com_sherwin-77_go-echo-template_pkg_response.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a sample server for go-echo-template.
+  title: go-echo-template
+  version: "1.0"
+paths:
+  /admin/roles:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.RoleResponse'
+                  type: array
+              type: object
+      summary: Get All Roles
+      tags:
+      - '[Admin] Role'
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Role Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.RoleRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.RoleResponse'
+              type: object
+      summary: Create Role
+      tags:
+      - '[Admin] Role'
+  /admin/roles/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: The Role ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      summary: Delete Role
+      tags:
+      - '[Admin] Role'
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: The Role ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.RoleResponse'
+              type: object
+      summary: Get Role By ID
+      tags:
+      - '[Admin] Role'
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: The Role ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update Role Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UpdateRoleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.RoleResponse'
+              type: object
+      summary: Update Role
+      tags:
+      - '[Admin] Role'
+  /admin/users:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse'
+                  type: array
+              type: object
+      summary: Get All Users
+      tags:
+      - User
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse'
+              type: object
+      summary: Create User
+      tags:
+      - '[Admin] User'
+  /admin/users/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: The User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse'
+              type: object
+      summary: Delete User
+      tags:
+      - '[Admin] User'
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: The User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse'
+              type: object
+      summary: Get User By ID
+      tags:
+      - '[Admin] User'
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: The User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update User Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse'
+              type: object
+      summary: Update User
+      tags:
+      - '[Admin] User'
+  /login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Login Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: token
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: Login User
+      tags:
+      - User
+  /profile:
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update User Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse'
+              type: object
+      summary: Edit Profile
+      tags:
+      - User
+  /register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse'
+              type: object
+      summary: Register User
+      tags:
+      - User
+  /users/role:
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Change Role Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.ChangeRoleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      summary: Change Role
+      tags:
+      - '[Admin] User'
+swagger: "2.0"
