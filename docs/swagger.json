@@ -1,8 +1,8 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is a sample server for go-echo-template.",
-        "title": "go-echo-template",
+        "description": "API of your ticketing solution",
+        "title": "GoTix",
         "contact": {},
         "version": "1.0"
     },
@@ -27,7 +27,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
@@ -35,7 +35,7 @@
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.RoleResponse"
+                                                "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.RoleResponse"
                                             }
                                         }
                                     }
@@ -63,7 +63,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.RoleRequest"
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.RoleRequest"
                         }
                     }
                 ],
@@ -73,13 +73,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.RoleResponse"
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.RoleResponse"
                                         }
                                     }
                                 }
@@ -116,13 +116,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.RoleResponse"
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.RoleResponse"
                                         }
                                     }
                                 }
@@ -157,7 +157,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
@@ -197,7 +197,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UpdateRoleRequest"
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UpdateRoleRequest"
                         }
                     }
                 ],
@@ -207,13 +207,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.RoleResponse"
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.RoleResponse"
                                         }
                                     }
                                 }
@@ -241,7 +241,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
@@ -249,7 +249,7 @@
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse"
+                                                "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UserResponse"
                                             }
                                         }
                                     }
@@ -277,7 +277,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserRequest"
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UserRequest"
                         }
                     }
                 ],
@@ -287,13 +287,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse"
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UserResponse"
                                         }
                                     }
                                 }
@@ -330,13 +330,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse"
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UserResponse"
                                         }
                                     }
                                 }
@@ -371,13 +371,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse"
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UserResponse"
                                         }
                                     }
                                 }
@@ -411,7 +411,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UpdateUserRequest"
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UpdateUserRequest"
                         }
                     }
                 ],
@@ -421,13 +421,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse"
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UserResponse"
                                         }
                                     }
                                 }
@@ -456,7 +456,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.LoginRequest"
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.LoginRequest"
                         }
                     }
                 ],
@@ -466,7 +466,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
@@ -501,7 +501,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UpdateUserRequest"
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UpdateUserRequest"
                         }
                     }
                 ],
@@ -511,13 +511,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse"
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UserResponse"
                                         }
                                     }
                                 }
@@ -546,7 +546,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserRequest"
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UserRequest"
                         }
                     }
                 ],
@@ -556,13 +556,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse"
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UserResponse"
                                         }
                                     }
                                 }
@@ -591,7 +591,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.ChangeRoleRequest"
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.ChangeRoleRequest"
                         }
                     }
                 ],
@@ -601,7 +601,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
@@ -619,7 +619,7 @@
         }
     },
     "definitions": {
-        "github_com_sherwin-77_go-echo-template_internal_http_dto.ChangeRoleRequest": {
+        "github_com_sherwin-77_go-tix_internal_http_dto.ChangeRoleRequest": {
             "type": "object",
             "required": [
                 "items",
@@ -629,7 +629,7 @@
                 "items": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.ChangeRoleRequestItem"
+                        "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.ChangeRoleRequestItem"
                     }
                 },
                 "userID": {
@@ -637,7 +637,7 @@
                 }
             }
         },
-        "github_com_sherwin-77_go-echo-template_internal_http_dto.ChangeRoleRequestItem": {
+        "github_com_sherwin-77_go-tix_internal_http_dto.ChangeRoleRequestItem": {
             "type": "object",
             "required": [
                 "action",
@@ -656,7 +656,7 @@
                 }
             }
         },
-        "github_com_sherwin-77_go-echo-template_internal_http_dto.LoginRequest": {
+        "github_com_sherwin-77_go-tix_internal_http_dto.LoginRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -671,7 +671,7 @@
                 }
             }
         },
-        "github_com_sherwin-77_go-echo-template_internal_http_dto.RoleRequest": {
+        "github_com_sherwin-77_go-tix_internal_http_dto.RoleRequest": {
             "type": "object",
             "required": [
                 "auth_level",
@@ -686,7 +686,7 @@
                 }
             }
         },
-        "github_com_sherwin-77_go-echo-template_internal_http_dto.RoleResponse": {
+        "github_com_sherwin-77_go-tix_internal_http_dto.RoleResponse": {
             "type": "object",
             "properties": {
                 "auth_level": {
@@ -700,7 +700,7 @@
                 }
             }
         },
-        "github_com_sherwin-77_go-echo-template_internal_http_dto.UpdateRoleRequest": {
+        "github_com_sherwin-77_go-tix_internal_http_dto.UpdateRoleRequest": {
             "type": "object",
             "required": [
                 "auth_level",
@@ -719,7 +719,7 @@
                 }
             }
         },
-        "github_com_sherwin-77_go-echo-template_internal_http_dto.UpdateUserRequest": {
+        "github_com_sherwin-77_go-tix_internal_http_dto.UpdateUserRequest": {
             "type": "object",
             "required": [
                 "id"
@@ -739,7 +739,7 @@
                 }
             }
         },
-        "github_com_sherwin-77_go-echo-template_internal_http_dto.UserRequest": {
+        "github_com_sherwin-77_go-tix_internal_http_dto.UserRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -758,7 +758,7 @@
                 }
             }
         },
-        "github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse": {
+        "github_com_sherwin-77_go-tix_internal_http_dto.UserResponse": {
             "type": "object",
             "properties": {
                 "email": {
@@ -770,7 +770,7 @@
                 "roles": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.RoleResponse"
+                        "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.RoleResponse"
                     }
                 },
                 "username": {
@@ -778,7 +778,7 @@
                 }
             }
         },
-        "github_com_sherwin-77_go-echo-template_pkg_response.Response": {
+        "github_com_sherwin-77_go-tix_pkg_response.Response": {
             "type": "object",
             "properties": {
                 "code": {

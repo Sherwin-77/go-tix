@@ -33,7 +33,7 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
@@ -41,7 +41,7 @@ const docTemplate = `{
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.RoleResponse"
+                                                "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.RoleResponse"
                                             }
                                         }
                                     }
@@ -69,7 +69,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.RoleRequest"
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.RoleRequest"
                         }
                     }
                 ],
@@ -79,13 +79,13 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.RoleResponse"
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.RoleResponse"
                                         }
                                     }
                                 }
@@ -122,13 +122,13 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.RoleResponse"
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.RoleResponse"
                                         }
                                     }
                                 }
@@ -163,7 +163,7 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
@@ -203,7 +203,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UpdateRoleRequest"
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UpdateRoleRequest"
                         }
                     }
                 ],
@@ -213,13 +213,13 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.RoleResponse"
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.RoleResponse"
                                         }
                                     }
                                 }
@@ -247,7 +247,7 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
@@ -255,7 +255,7 @@ const docTemplate = `{
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse"
+                                                "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UserResponse"
                                             }
                                         }
                                     }
@@ -283,7 +283,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserRequest"
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UserRequest"
                         }
                     }
                 ],
@@ -293,13 +293,13 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse"
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UserResponse"
                                         }
                                     }
                                 }
@@ -336,13 +336,13 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse"
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UserResponse"
                                         }
                                     }
                                 }
@@ -377,13 +377,13 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse"
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UserResponse"
                                         }
                                     }
                                 }
@@ -417,7 +417,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UpdateUserRequest"
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UpdateUserRequest"
                         }
                     }
                 ],
@@ -427,13 +427,13 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse"
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UserResponse"
                                         }
                                     }
                                 }
@@ -462,7 +462,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.LoginRequest"
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.LoginRequest"
                         }
                     }
                 ],
@@ -472,7 +472,7 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
@@ -507,7 +507,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UpdateUserRequest"
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UpdateUserRequest"
                         }
                     }
                 ],
@@ -517,13 +517,13 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse"
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UserResponse"
                                         }
                                     }
                                 }
@@ -552,7 +552,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserRequest"
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UserRequest"
                         }
                     }
                 ],
@@ -562,13 +562,13 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse"
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UserResponse"
                                         }
                                     }
                                 }
@@ -597,7 +597,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.ChangeRoleRequest"
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.ChangeRoleRequest"
                         }
                     }
                 ],
@@ -607,7 +607,7 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_pkg_response.Response"
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                                 },
                                 {
                                     "type": "object",
@@ -625,7 +625,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "github_com_sherwin-77_go-echo-template_internal_http_dto.ChangeRoleRequest": {
+        "github_com_sherwin-77_go-tix_internal_http_dto.ChangeRoleRequest": {
             "type": "object",
             "required": [
                 "items",
@@ -635,7 +635,7 @@ const docTemplate = `{
                 "items": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.ChangeRoleRequestItem"
+                        "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.ChangeRoleRequestItem"
                     }
                 },
                 "userID": {
@@ -643,7 +643,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_sherwin-77_go-echo-template_internal_http_dto.ChangeRoleRequestItem": {
+        "github_com_sherwin-77_go-tix_internal_http_dto.ChangeRoleRequestItem": {
             "type": "object",
             "required": [
                 "action",
@@ -662,7 +662,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_sherwin-77_go-echo-template_internal_http_dto.LoginRequest": {
+        "github_com_sherwin-77_go-tix_internal_http_dto.LoginRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -677,7 +677,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_sherwin-77_go-echo-template_internal_http_dto.RoleRequest": {
+        "github_com_sherwin-77_go-tix_internal_http_dto.RoleRequest": {
             "type": "object",
             "required": [
                 "auth_level",
@@ -692,7 +692,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_sherwin-77_go-echo-template_internal_http_dto.RoleResponse": {
+        "github_com_sherwin-77_go-tix_internal_http_dto.RoleResponse": {
             "type": "object",
             "properties": {
                 "auth_level": {
@@ -706,7 +706,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_sherwin-77_go-echo-template_internal_http_dto.UpdateRoleRequest": {
+        "github_com_sherwin-77_go-tix_internal_http_dto.UpdateRoleRequest": {
             "type": "object",
             "required": [
                 "auth_level",
@@ -725,7 +725,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_sherwin-77_go-echo-template_internal_http_dto.UpdateUserRequest": {
+        "github_com_sherwin-77_go-tix_internal_http_dto.UpdateUserRequest": {
             "type": "object",
             "required": [
                 "id"
@@ -745,7 +745,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_sherwin-77_go-echo-template_internal_http_dto.UserRequest": {
+        "github_com_sherwin-77_go-tix_internal_http_dto.UserRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -764,7 +764,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_sherwin-77_go-echo-template_internal_http_dto.UserResponse": {
+        "github_com_sherwin-77_go-tix_internal_http_dto.UserResponse": {
             "type": "object",
             "properties": {
                 "email": {
@@ -776,7 +776,7 @@ const docTemplate = `{
                 "roles": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/github_com_sherwin-77_go-echo-template_internal_http_dto.RoleResponse"
+                        "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.RoleResponse"
                     }
                 },
                 "username": {
@@ -784,7 +784,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_sherwin-77_go-echo-template_pkg_response.Response": {
+        "github_com_sherwin-77_go-tix_pkg_response.Response": {
             "type": "object",
             "properties": {
                 "code": {
@@ -805,8 +805,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:8080",
 	BasePath:         "/api/v1",
 	Schemes:          []string{},
-	Title:            "go-echo-template",
-	Description:      "This is a sample server for go-echo-template.",
+	Title:            "GoTix",
+	Description:      "API of your ticketing solution",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

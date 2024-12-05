@@ -19,9 +19,9 @@ import (
 	_ "github.com/sherwin-77/go-tix/docs"
 )
 
-//	@title			go-echo-template
+//	@title			GoTix
 //	@version		1.0
-//	@description	This is a sample server for go-echo-template.
+//	@description	API of your ticketing solution
 
 //	@host		localhost:8080
 //	@BasePath	/api/v1
