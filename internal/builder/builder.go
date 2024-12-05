@@ -2,16 +2,16 @@ package builder
 
 import (
 	"github.com/labstack/echo/v4"
-	"github.com/sherwin-77/go-echo-template/configs"
-	"github.com/sherwin-77/go-echo-template/internal/http/handler"
-	"github.com/sherwin-77/go-echo-template/internal/http/middlewares"
-	"github.com/sherwin-77/go-echo-template/internal/http/router"
-	"github.com/sherwin-77/go-echo-template/internal/repository"
-	"github.com/sherwin-77/go-echo-template/internal/service"
-	"github.com/sherwin-77/go-echo-template/pkg/caches"
-	"github.com/sherwin-77/go-echo-template/pkg/constants"
-	"github.com/sherwin-77/go-echo-template/pkg/query"
-	"github.com/sherwin-77/go-echo-template/pkg/tokens"
+	"github.com/sherwin-77/go-tix/configs"
+	"github.com/sherwin-77/go-tix/internal/http/handler"
+	"github.com/sherwin-77/go-tix/internal/http/middlewares"
+	"github.com/sherwin-77/go-tix/internal/http/router"
+	"github.com/sherwin-77/go-tix/internal/repository"
+	"github.com/sherwin-77/go-tix/internal/service"
+	"github.com/sherwin-77/go-tix/pkg/caches"
+	"github.com/sherwin-77/go-tix/pkg/constants"
+	"github.com/sherwin-77/go-tix/pkg/query"
+	"github.com/sherwin-77/go-tix/pkg/tokens"
 	"gorm.io/gorm"
 )
 

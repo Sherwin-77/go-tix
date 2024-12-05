@@ -5,13 +5,13 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/google/uuid"
-	"github.com/sherwin-77/go-echo-template/internal/entity"
-	"github.com/sherwin-77/go-echo-template/internal/http/dto"
+	"github.com/sherwin-77/go-tix/internal/entity"
+	"github.com/sherwin-77/go-tix/internal/http/dto"
 	"testing"
 
-	"github.com/sherwin-77/go-echo-template/internal/service"
-	mock_caches "github.com/sherwin-77/go-echo-template/test/mock/pkg/caches"
-	mock_repository "github.com/sherwin-77/go-echo-template/test/mock/repository"
+	"github.com/sherwin-77/go-tix/internal/service"
+	mock_caches "github.com/sherwin-77/go-tix/test/mock/pkg/caches"
+	mock_repository "github.com/sherwin-77/go-tix/test/mock/repository"
 	"github.com/stretchr/testify/suite"
 	"go.uber.org/mock/gomock"
 )

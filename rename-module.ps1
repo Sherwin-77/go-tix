@@ -1,4 +1,4 @@
-$NEW_MODULE = "github.com/sherwin-77/golang-echo"
+$NEW_MODULE = "github.com/sherwin-77/go-tix"
 $OLD_MODULE = "github.com/sherwin-77/go-echo-template"
 
 # Update the module name in go.mod

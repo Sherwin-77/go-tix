@@ -9,14 +9,14 @@ import (
 	"time"
 
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/sherwin-77/go-echo-template/configs"
-	"github.com/sherwin-77/go-echo-template/internal/builder"
-	"github.com/sherwin-77/go-echo-template/internal/http/handler"
-	"github.com/sherwin-77/go-echo-template/pkg/caches"
-	"github.com/sherwin-77/go-echo-template/pkg/database"
-	"github.com/sherwin-77/go-echo-template/pkg/server"
+	"github.com/sherwin-77/go-tix/configs"
+	"github.com/sherwin-77/go-tix/internal/builder"
+	"github.com/sherwin-77/go-tix/internal/http/handler"
+	"github.com/sherwin-77/go-tix/pkg/caches"
+	"github.com/sherwin-77/go-tix/pkg/database"
+	"github.com/sherwin-77/go-tix/pkg/server"
 
-	_ "github.com/sherwin-77/go-echo-template/docs"
+	_ "github.com/sherwin-77/go-tix/docs"
 )
 
 //	@title			go-echo-template

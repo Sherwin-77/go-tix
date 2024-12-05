@@ -4,9 +4,9 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/sherwin-77/go-echo-template/internal/http/handler"
-	"github.com/sherwin-77/go-echo-template/internal/http/middlewares"
-	"github.com/sherwin-77/go-echo-template/pkg/route"
+	"github.com/sherwin-77/go-tix/internal/http/handler"
+	"github.com/sherwin-77/go-tix/internal/http/middlewares"
+	"github.com/sherwin-77/go-tix/pkg/route"
 )
 
 func UserRoutes(userHandler handler.UserHandler, authMiddleware middlewares.AuthMiddleware) ([]route.Route, []echo.MiddlewareFunc) {

@@ -1,6 +1,6 @@
 package dto
 
-import "github.com/sherwin-77/go-echo-template/internal/entity"
+import "github.com/sherwin-77/go-tix/internal/entity"
 
 type RoleRequest struct {
 	Name      string `json:"name" validate:"required"`

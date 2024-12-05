@@ -13,7 +13,7 @@ import (
 	url "net/url"
 	reflect "reflect"
 
-	response "github.com/sherwin-77/go-echo-template/pkg/response"
+	response "github.com/sherwin-77/go-tix/pkg/response"
 	gomock "go.uber.org/mock/gomock"
 	gorm "gorm.io/gorm"
 )

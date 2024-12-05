@@ -14,9 +14,9 @@ import (
 	url "net/url"
 	reflect "reflect"
 
-	entity "github.com/sherwin-77/go-echo-template/internal/entity"
-	dto "github.com/sherwin-77/go-echo-template/internal/http/dto"
-	response "github.com/sherwin-77/go-echo-template/pkg/response"
+	entity "github.com/sherwin-77/go-tix/internal/entity"
+	dto "github.com/sherwin-77/go-tix/internal/http/dto"
+	response "github.com/sherwin-77/go-tix/pkg/response"
 	gomock "go.uber.org/mock/gomock"
 )
 

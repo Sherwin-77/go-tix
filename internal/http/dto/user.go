@@ -1,6 +1,6 @@
 package dto
 
-import "github.com/sherwin-77/go-echo-template/internal/entity"
+import "github.com/sherwin-77/go-tix/internal/entity"
 
 type UserRequest struct {
 	Email    string `json:"email" validate:"required,email"`

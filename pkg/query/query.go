@@ -2,8 +2,8 @@ package query
 
 import (
 	"fmt"
-	"github.com/sherwin-77/go-echo-template/pkg/constants"
-	"github.com/sherwin-77/go-echo-template/pkg/response"
+	"github.com/sherwin-77/go-tix/pkg/constants"
+	"github.com/sherwin-77/go-tix/pkg/response"
 	"gorm.io/gorm"
 	"math"
 	"net/url"
