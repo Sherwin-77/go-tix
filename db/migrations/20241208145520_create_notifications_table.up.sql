@@ -1,7 +1,7 @@
 BEGIN;
 
 CREATE TABLE notifications (
-    id uuid INTEGER PRIMARY KEY,
+    id uuid PRIMARY KEY,
     user_id INTEGER NOT NULL,
     triggerable VARCHAR(50),
     read_at DATE,

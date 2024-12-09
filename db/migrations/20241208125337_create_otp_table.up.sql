@@ -1,7 +1,7 @@
 BEGIN;
 
 CREATE TABLE otps (
-    id uuid INTEGER PRIMARY KEY ,
+    id uuid PRIMARY KEY ,
     email VARCHAR(255) NOT NULL,
     user_id INTEGER,
     action VARCHAR(50),

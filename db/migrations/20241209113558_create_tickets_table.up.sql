@@ -1,7 +1,7 @@
 BEGIN;
 
 CREATE TABLE tickets (
-    id uuid INTEGER PRIMARY KEY,
+    id uuid PRIMARY KEY,
     event_id INTEGER NOT NULL,
     category VARCHAR(100),
     price DECIMAL(12, 2),

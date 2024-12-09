@@ -1,7 +1,7 @@
 BEGIN;
 
 CREATE TABLE sale_invoice_items (
-    id uuid SERIAL PRIMARY KEY AUTOINCREMENT,
+    id uuid PRIMARY KEY,
     sale_invoice_id INTEGER NOT NULL,
     invoiceable_id INTEGER,
     invoiceable_type VARCHAR(50),

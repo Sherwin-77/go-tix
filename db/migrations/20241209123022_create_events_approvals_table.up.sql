@@ -1,5 +1,5 @@
 CREATE TABLE event_approvals (
-    id uuid INTEGER PRIMARY KEY,
+    id uuid PRIMARY KEY,
     user_id uuid INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     status VARCHAR(20) NOT NULL DEFAULT 'pending',
     title VARCHAR(255) NOT NULL,

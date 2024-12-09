@@ -1,7 +1,7 @@
 BEGIN;
 
 CREATE TABLE sale_invoices (
-    id uuid SERIAL PRIMARY KEY AUTOINCREMENT,
+    id uuid PRIMARY KEY,
     user_id INTEGER NOT NULL,
     number VARCHAR(50),
     subtotal DECIMAL(12, 2),
