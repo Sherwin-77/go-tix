@@ -4,7 +4,7 @@ CREATE TABLE sale_invoice_items (
     id UUID PRIMARY KEY,
     sale_invoice_id UUID NOT NULL,
     invoiceable_id UUID NOT NULL,
-    invoiceable_type VARCHAR(50),
+    invoiceable_type VARCHAR(255) NOT NULL,
     qty INTEGER,
     total DECIMAL(16, 2),
     metadata JSONB,

@@ -10,8 +10,8 @@ CREATE TABLE event_approvals (
     location VARCHAR(2047),
     longitude DECIMAL(12, 2),
     latitude DECIMAL(12, 2),
-    start_at TIMESTAMP NOT NULL,
-    end_at TIMESTAMP NOT NULL,
+    start_at TIMESTAMP(6) NOT NULL,
+    end_at TIMESTAMP(6) NOT NULL,
     created_at TIMESTAMP(6) WITH TIME ZONE,
     updated_at TIMESTAMP(6) WITH TIME ZONE,
 
