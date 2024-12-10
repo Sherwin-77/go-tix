@@ -1,3 +1,5 @@
+BEGIN; 
+
 CREATE TABLE event_approvals (
     id uuid PRIMARY KEY,
     user_id uuid INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
