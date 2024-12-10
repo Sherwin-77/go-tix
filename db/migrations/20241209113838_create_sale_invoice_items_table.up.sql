@@ -6,7 +6,7 @@ CREATE TABLE sale_invoice_items (
     invoiceable_id UUID NOT NULL,
     invoiceable_type VARCHAR(50),
     qty INTEGER,
-    total DECIMAL(12, 2),
+    total DECIMAL(16, 2),
     metadata JSONB,
     created_at TIMESTAMP(6) WITH TIME ZONE,
     updated_at TIMESTAMP(6) WITH TIME ZONE,
