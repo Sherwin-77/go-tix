@@ -6,7 +6,7 @@ CREATE TABLE notifications (
     triggerable VARCHAR(50),
     read_at DATE,
     created_at TIMESTAMP(6) WITH TIME ZONE,
-    metadata JSON,
+    metadata JSONB,
 
     CONSTRAINT notifications_user_id_fkey FOREIGN KEY (user_id) REFERENCES users (id)
 );
