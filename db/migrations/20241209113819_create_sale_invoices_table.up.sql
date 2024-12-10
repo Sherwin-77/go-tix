@@ -20,7 +20,9 @@ CREATE TABLE sale_invoices (
     refunded_at TIMESTAMP(6) WITH TIME ZONE,
     metadata JSON,
     created_at TIMESTAMP(6) WITH TIME ZONE,
-    updated_at TIMESTAMP(6) WITH TIME ZONE
+    updated_at TIMESTAMP(6) WITH TIME ZONE,
+
+    CONSTRAINT sale_invoices_user_id_fkey FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
 END;
