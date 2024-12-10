@@ -1,13 +1,13 @@
 BEGIN;
 
 CREATE TABLE sale_invoice_items (
-    id uuid PRIMARY KEY,
-    sale_invoice_id INTEGER NOT NULL,
-    invoiceable_id INTEGER,
+    id UUID PRIMARY KEY,
+    sale_invoice_id UUID NOT NULL,
+    invoiceable_id UUID NOT NULL,
     invoiceable_type VARCHAR(50),
     qty INTEGER,
     total DECIMAL(12, 2),
-    metadata JSON,
+    metadata JSONB,
     created_at TIMESTAMP(6) WITH TIME ZONE,
     updated_at TIMESTAMP(6) WITH TIME ZONE,
 

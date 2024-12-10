@@ -1,7 +1,7 @@
 BEGIN;
 
 CREATE TABLE events (
-    id uuid PRIMARY KEY,
+    id UUID PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     description VARCHAR(2047),
     organizer VARCHAR(255),

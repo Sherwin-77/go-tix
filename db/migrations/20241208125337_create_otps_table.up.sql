@@ -1,9 +1,9 @@
 BEGIN;
 
 CREATE TABLE otps (
-    id uuid PRIMARY KEY ,
+    id UUID PRIMARY KEY ,
     email VARCHAR(255) NOT NULL,
-    user_id INTEGER NOT NULL,
+    user_id UUID NOT NULL,
     action VARCHAR(50),
     code VARCHAR(10),
     status VARCHAR(20),
@@ -13,7 +13,7 @@ CREATE TABLE otps (
     verify_attempts INTEGER DEFAULT 0,
     created_at TIMESTAMP(6) WITH TIME ZONE,
     updated_at TIMESTAMP(6) WITH TIME ZONE,
-    
+
     CONSTRAINT otp_user_id_fkey FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
