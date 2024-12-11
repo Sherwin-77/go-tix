@@ -3,7 +3,7 @@ BEGIN;
 CREATE TABLE event_approvals (
     id UUID PRIMARY KEY,
     user_id UUID NOT NULL ,
-    status VARCHAR(20) NOT NULL DEFAULT 'pending',
+    status VARCHAR(20) NOT NULL ,
     title VARCHAR(255) NOT NULL,
     description VARCHAR(2047),
     organizer VARCHAR(255) NOT NULL,
