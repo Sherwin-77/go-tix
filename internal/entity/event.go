@@ -17,3 +17,13 @@ type Event struct {
 
 	Tickets []*Ticket `json:"tickets,omitempty" gorm:"foreignKey:EventID"`
 }
+
+type EventWithMinMaxPrice struct {
+	Event
+	MinPrice float64 `json:"min_price"`
+	MaxPrice float64 `json:"max_price"`
+}
+
+func (e *Event) TableName() string {
+	return "events"
+}

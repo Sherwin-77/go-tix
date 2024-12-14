@@ -1,5 +1,63 @@
 basePath: /api/v1
 definitions:
+  github_com_sherwin-77_go-tix_internal_http_dto.AdminEventListResponse:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      end_at:
+        type: string
+      id:
+        type: string
+      latitude:
+        type: number
+      location:
+        type: string
+      longitude:
+        type: number
+      max_price:
+        type: number
+      min_price:
+        type: number
+      organizer:
+        type: string
+      start_at:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  github_com_sherwin-77_go-tix_internal_http_dto.AdminEventResponse:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      end_at:
+        type: string
+      id:
+        type: string
+      latitude:
+        type: number
+      location:
+        type: string
+      longitude:
+        type: number
+      organizer:
+        type: string
+      start_at:
+        type: string
+      tickets:
+        items:
+          $ref: '#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.TicketResponse'
+        type: array
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
   github_com_sherwin-77_go-tix_internal_http_dto.ChangeRoleRequest:
     properties:
       items:
@@ -24,6 +82,56 @@ definitions:
     required:
     - action
     - id
+    type: object
+  github_com_sherwin-77_go-tix_internal_http_dto.EventListResponse:
+    properties:
+      description:
+        type: string
+      end_at:
+        type: string
+      id:
+        type: string
+      latitude:
+        type: number
+      location:
+        type: string
+      longitude:
+        type: number
+      max_price:
+        type: number
+      min_price:
+        type: number
+      organizer:
+        type: string
+      start_at:
+        type: string
+      title:
+        type: string
+    type: object
+  github_com_sherwin-77_go-tix_internal_http_dto.EventResponse:
+    properties:
+      description:
+        type: string
+      end_at:
+        type: string
+      id:
+        type: string
+      latitude:
+        type: number
+      location:
+        type: string
+      longitude:
+        type: number
+      organizer:
+        type: string
+      start_at:
+        type: string
+      tickets:
+        items:
+          $ref: '#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.TicketResponse'
+        type: array
+      title:
+        type: string
     type: object
   github_com_sherwin-77_go-tix_internal_http_dto.LoginRequest:
     properties:
@@ -53,6 +161,17 @@ definitions:
         type: string
       name:
         type: string
+    type: object
+  github_com_sherwin-77_go-tix_internal_http_dto.TicketResponse:
+    properties:
+      category:
+        type: string
+      event_id:
+        type: string
+      id:
+        type: string
+      price:
+        type: number
     type: object
   github_com_sherwin-77_go-tix_internal_http_dto.UpdateRoleRequest:
     properties:
@@ -121,6 +240,52 @@ info:
   title: GoTix
   version: "1.0"
 paths:
+  /admin/events:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.AdminEventListResponse'
+                  type: array
+              type: object
+      summary: Get All Events
+      tags:
+      - '[Admin] Event'
+  /admin/events/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: The Event ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.AdminEventResponse'
+              type: object
+      summary: Get Event By ID
+      tags:
+      - '[Admin] Event'
   /admin/roles:
     get:
       consumes:
@@ -371,6 +536,52 @@ paths:
       summary: Update User
       tags:
       - '[Admin] User'
+  /events:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.EventListResponse'
+                  type: array
+              type: object
+      summary: Get User Events
+      tags:
+      - '[User] Event'
+  /events/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: The Event ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.EventResponse'
+              type: object
+      summary: Get Event By ID
+      tags:
+      - '[User] Event'
   /login:
     post:
       consumes:

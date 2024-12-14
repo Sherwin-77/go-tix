@@ -9,6 +9,7 @@ import (
 type EventRepository interface {
 	BaseRepository
 	GetEvents(ctx context.Context, tx *gorm.DB) ([]entity.Event, error)
+	GetEventsWithMinMaxPrice(ctx context.Context, tx *gorm.DB) ([]entity.EventWithMinMaxPrice, error)
 	GetEventByID(ctx context.Context, tx *gorm.DB, id string) (*entity.Event, error)
 	CreateEvent(ctx context.Context, tx *gorm.DB, event *entity.Event) error
 	UpdateEvent(ctx context.Context, tx *gorm.DB, event *entity.Event) error
@@ -25,6 +26,16 @@ func NewEventRepository(db *gorm.DB) EventRepository {
 
 func (r *eventRepository) GetEvents(ctx context.Context, tx *gorm.DB) ([]entity.Event, error) {
 	var events []entity.Event
+
+	if err := tx.WithContext(ctx).Find(&events).Error; err != nil {
+		return nil, err
+	}
+
+	return events, nil
+}
+
+func (r *eventRepository) GetEventsWithMinMaxPrice(ctx context.Context, tx *gorm.DB) ([]entity.EventWithMinMaxPrice, error) {
+	var events []entity.EventWithMinMaxPrice
 
 	if err := tx.WithContext(ctx).Find(&events).Error; err != nil {
 		return nil, err

@@ -9,7 +9,14 @@ import (
 	"github.com/sherwin-77/go-tix/pkg/route"
 )
 
-func UserRoutes(userHandler handler.UserHandler, authMiddleware middlewares.AuthMiddleware) ([]route.Route, []echo.MiddlewareFunc) {
+func UserRoutes(
+	userHandler handler.UserHandler,
+	eventHandler handler.EventHandler,
+	authMiddleware middlewares.AuthMiddleware,
+	middleware middlewares.Middleware,
+) ([]route.Route, []echo.MiddlewareFunc) {
+	validateID := middleware.ValidateUUID([]string{"id"})
+
 	routes := []route.Route{
 		{
 			Method:      http.MethodPost,
@@ -31,6 +38,23 @@ func UserRoutes(userHandler handler.UserHandler, authMiddleware middlewares.Auth
 				authMiddleware.Authenticated,
 			},
 		},
+		{
+			Method:  http.MethodGet,
+			Path:    "/events",
+			Handler: eventHandler.GetUserEvents,
+			Middlewares: []echo.MiddlewareFunc{
+				authMiddleware.Authenticated,
+			},
+		},
+		{
+			Method:  http.MethodGet,
+			Path:    "/events/:id",
+			Handler: eventHandler.GetUserEventByID,
+			Middlewares: []echo.MiddlewareFunc{
+				authMiddleware.Authenticated,
+				validateID,
+			},
+		},
 	}
 
 	var middlewareFuncs []echo.MiddlewareFunc
@@ -38,7 +62,15 @@ func UserRoutes(userHandler handler.UserHandler, authMiddleware middlewares.Auth
 	return routes, middlewareFuncs
 }
 
-func AdminRoutes(userHandler handler.UserHandler, roleHandler handler.RoleHandler, middleware middlewares.Middleware, authMiddleware middlewares.AuthMiddleware) ([]route.Route, []echo.MiddlewareFunc) {
+func AdminRoutes(
+	userHandler handler.UserHandler,
+	roleHandler handler.RoleHandler,
+	eventHandler handler.EventHandler,
+	middleware middlewares.Middleware,
+	authMiddleware middlewares.AuthMiddleware,
+) ([]route.Route, []echo.MiddlewareFunc) {
+	validateID := middleware.ValidateUUID([]string{"id"})
+
 	routes := []route.Route{
 		{
 			Method:      http.MethodGet,
@@ -57,7 +89,7 @@ func AdminRoutes(userHandler handler.UserHandler, roleHandler handler.RoleHandle
 			Path:    "/users/:id",
 			Handler: userHandler.UpdateUser,
 			Middlewares: []echo.MiddlewareFunc{
-				middleware.ValidateUUID([]string{"id"}),
+				validateID,
 			},
 		},
 		{
@@ -65,7 +97,7 @@ func AdminRoutes(userHandler handler.UserHandler, roleHandler handler.RoleHandle
 			Path:    "/users/:id/role",
 			Handler: userHandler.ChangeRole,
 			Middlewares: []echo.MiddlewareFunc{
-				middleware.ValidateUUID([]string{"id"}),
+				validateID,
 			},
 		},
 		{
@@ -73,7 +105,7 @@ func AdminRoutes(userHandler handler.UserHandler, roleHandler handler.RoleHandle
 			Path:    "/users/:id",
 			Handler: userHandler.GetUserByID,
 			Middlewares: []echo.MiddlewareFunc{
-				middleware.ValidateUUID([]string{"id"}),
+				validateID,
 			},
 		},
 		{
@@ -93,7 +125,7 @@ func AdminRoutes(userHandler handler.UserHandler, roleHandler handler.RoleHandle
 			Path:    "/roles/:id",
 			Handler: roleHandler.GetRoleByID,
 			Middlewares: []echo.MiddlewareFunc{
-				middleware.ValidateUUID([]string{"id"}),
+				validateID,
 			},
 		},
 		{
@@ -101,7 +133,7 @@ func AdminRoutes(userHandler handler.UserHandler, roleHandler handler.RoleHandle
 			Path:    "/roles/:id",
 			Handler: roleHandler.UpdateRole,
 			Middlewares: []echo.MiddlewareFunc{
-				middleware.ValidateUUID([]string{"id"}),
+				validateID,
 			},
 		},
 		{
@@ -109,7 +141,21 @@ func AdminRoutes(userHandler handler.UserHandler, roleHandler handler.RoleHandle
 			Path:    "/roles/:id",
 			Handler: roleHandler.DeleteRole,
 			Middlewares: []echo.MiddlewareFunc{
-				middleware.ValidateUUID([]string{"id"}),
+				validateID,
+			},
+		},
+		{
+			Method:      http.MethodGet,
+			Path:        "/events",
+			Handler:     eventHandler.GetEvents,
+			Middlewares: []echo.MiddlewareFunc{},
+		},
+		{
+			Method:  http.MethodGet,
+			Path:    "/events/:id",
+			Handler: eventHandler.GetEventByID,
+			Middlewares: []echo.MiddlewareFunc{
+				validateID,
 			},
 		},
 	}

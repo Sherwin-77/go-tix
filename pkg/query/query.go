@@ -45,13 +45,15 @@ type Builder interface {
 }
 
 type builder struct {
+	InitBuilder    func(db *gorm.DB) *gorm.DB
 	AllowedFilters []FilterParam
 	AllowedSorts   []SortParam
 	DefaultSort    SortParam
 }
 
-func NewBuilder(allowedFilters []FilterParam, allowedSorts []SortParam, defaultSort SortParam) Builder {
+func NewBuilder(initBuilder func(db *gorm.DB) *gorm.DB, allowedFilters []FilterParam, allowedSorts []SortParam, defaultSort SortParam) Builder {
 	return &builder{
+		InitBuilder:    initBuilder,
 		AllowedFilters: allowedFilters,
 		AllowedSorts:   allowedSorts,
 		DefaultSort:    defaultSort,
