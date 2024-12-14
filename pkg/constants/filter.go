@@ -6,4 +6,5 @@ const (
 	FilterResponseSingleOption   string = "singleOption"
 	FilterResponseMultipleOption string = "multipleOption"
 	FilterResponsePartialText    string = "partialText"
+	FilterResponseDateRange      string = "dateRange"
 )
