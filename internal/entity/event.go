@@ -6,6 +6,7 @@ import (
 
 type Event struct {
 	BaseEntity
+	Status      string         `json:"status" gorm:"type:varchar(20);not null"`
 	Title       string         `json:"title" gorm:"type:varchar(255);not null"`
 	Description string         `json:"description" gorm:"type:varchar(2047)"`
 	Organizer   string         `json:"organizer" gorm:"type:varchar(255);not null"`

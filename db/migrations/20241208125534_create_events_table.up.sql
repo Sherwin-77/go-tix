@@ -2,6 +2,7 @@ BEGIN;
 
 CREATE TABLE events (
     id UUID PRIMARY KEY,
+    status VARCHAR(20) NOT NULL,
     title VARCHAR(255) NOT NULL,
     description VARCHAR(2047),
     organizer VARCHAR(255) NOT NULL,
