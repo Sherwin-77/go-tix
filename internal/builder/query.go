@@ -86,3 +86,55 @@ func NewEventQueryBuilder() query.Builder {
 		query.SortParam{DisplayName: "Start At", FieldName: "start_at", Direction: query.SortDirectionAscending},
 	)
 }
+
+func NewEventApprovalQueryBuilder() query.Builder {
+	return query.NewBuilder(
+		nil,
+		[]query.FilterParam{
+			{DisplayName: "Event Title", FieldName: "title", DisplayFilterType: constants.FilterResponsePartialText, FilterType: query.FilterTypePartial},
+			{
+				DisplayName:       "Start At Before",
+				FieldName:         "start_at_before",
+				DisplayFilterType: constants.FilterResponseDateRange,
+				FilterType:        query.FilterTypeCustom,
+				Callback: func(db *gorm.DB, value string) *gorm.DB {
+					return db.Where("start_at < ?", value)
+				},
+			},
+			{
+				DisplayName:       "Start At After",
+				FieldName:         "start_at_after",
+				DisplayFilterType: constants.FilterResponseDateRange,
+				FilterType:        query.FilterTypeCustom,
+				Callback: func(db *gorm.DB, value string) *gorm.DB {
+					return db.Where("start_at > ?", value)
+				},
+			},
+			{
+				DisplayName:       "End At Before",
+				FieldName:         "end_at_before",
+				DisplayFilterType: constants.FilterResponseDateRange,
+				FilterType:        query.FilterTypeCustom,
+				Callback: func(db *gorm.DB, value string) *gorm.DB {
+					return db.Where("end_at < ?", value)
+				},
+			},
+			{
+				DisplayName:       "End At After",
+				FieldName:         "end_at_after",
+				DisplayFilterType: constants.FilterResponseDateRange,
+				FilterType:        query.FilterTypeCustom,
+				Callback: func(db *gorm.DB, value string) *gorm.DB {
+					return db.Where("end_at > ?", value)
+				},
+			},
+		},
+		[]query.SortParam{
+			{DisplayName: "Event Title", FieldName: "title"},
+			{DisplayName: "Start At", FieldName: "start_at"},
+			{DisplayName: "End At", FieldName: "end_at"},
+			{DisplayName: "Created At", FieldName: "created_at"},
+		},
+		query.SortParam{DisplayName: "Created At", FieldName: "created_at", Direction: query.SortDirectionAscending},
+	)
+}

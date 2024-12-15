@@ -19,6 +19,7 @@ import (
 )
 
 type EventService interface {
+	CreateEventFromEventApproval(ctx context.Context, eventApproval *entity.EventApproval) error
 	GetEvents(ctx context.Context, queryParams url.Values) ([]entity.EventWithMinMaxPrice, *response.Meta, error)
 	GetEventByID(ctx context.Context, id string) (*entity.Event, error)
 	CreateEvent(ctx context.Context, request dto.CreateEventRequest) error
@@ -50,6 +51,43 @@ func NewEventService(
 		eventBuilder,
 		cache,
 	}
+}
+
+func (s *eventService) CreateEventFromEventApproval(ctx context.Context, eventApproval *entity.EventApproval) error {
+	return s.eventRepository.WithTransaction(func(tx *gorm.DB) error {
+		event := entity.Event{
+			Title:       eventApproval.Title,
+			Description: eventApproval.Description,
+			Organizer:   eventApproval.Organizer,
+			Location:    eventApproval.Location,
+			Latitude:    eventApproval.Latitude,
+			Longitude:   eventApproval.Longitude,
+			StartAt:     eventApproval.StartAt,
+			EndAt:       eventApproval.EndAt,
+			Status:      string(enum.EventStatusActive),
+		}
+
+		for _, ticket := range eventApproval.EventApprovalTickets {
+			event.Tickets = append(event.Tickets, &entity.Ticket{
+				Category: ticket.Category,
+				Price:    ticket.Price,
+			})
+		}
+
+		// If no ticket, assume free event
+		if len(event.Tickets) == 0 {
+			event.Tickets = append(event.Tickets, &entity.Ticket{
+				Category: "Free",
+				Price:    0,
+			})
+		}
+
+		if err := s.eventRepository.CreateEvent(ctx, tx, &event); err != nil {
+			return err
+		}
+
+		return nil
+	})
 }
 
 /* -------------------------------------------------------------------------- */
@@ -238,7 +276,7 @@ func (s *eventService) RegisterEvent(ctx context.Context, request dto.CreateEven
 			User:        user,
 		}
 		for _, ticket := range request.Tickets {
-			eventApproval.EventApprovalsTickets = append(eventApproval.EventApprovalsTickets, &entity.EventApprovalTicket{
+			eventApproval.EventApprovalTickets = append(eventApproval.EventApprovalTickets, &entity.EventApprovalTicket{
 				Category: ticket.Category,
 				Price:    null.FloatFromPtr(ticket.Price).ValueOrZero(),
 			})

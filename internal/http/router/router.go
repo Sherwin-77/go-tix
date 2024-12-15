@@ -74,6 +74,7 @@ func AdminRoutes(
 	userHandler handler.UserHandler,
 	roleHandler handler.RoleHandler,
 	eventHandler handler.EventHandler,
+	eventApprovalHandler handler.EventApprovalHandler,
 	middleware middlewares.Middleware,
 	authMiddleware middlewares.AuthMiddleware,
 ) ([]route.Route, []echo.MiddlewareFunc) {
@@ -176,6 +177,28 @@ func AdminRoutes(
 			Method:  http.MethodPatch,
 			Path:    "/events/:id",
 			Handler: eventHandler.UpdateEvent,
+			Middlewares: []echo.MiddlewareFunc{
+				validateID,
+			},
+		},
+		{
+			Method:      http.MethodGet,
+			Path:        "/event-approvals",
+			Handler:     eventApprovalHandler.GetEventApprovals,
+			Middlewares: []echo.MiddlewareFunc{},
+		},
+		{
+			Method:  http.MethodGet,
+			Path:    "/event-approvals/:id",
+			Handler: eventApprovalHandler.GetEventApprovalByID,
+			Middlewares: []echo.MiddlewareFunc{
+				validateID,
+			},
+		},
+		{
+			Method:  http.MethodPatch,
+			Path:    "/event-approvals/:id",
+			Handler: eventApprovalHandler.HandleEventApproval,
 			Middlewares: []echo.MiddlewareFunc{
 				validateID,
 			},

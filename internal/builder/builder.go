@@ -29,17 +29,20 @@ func BuildV1Routes(config *configs.Config, db *gorm.DB, cache caches.Cache, grou
 	// Initialize builders
 	userBuilder := NewUserQueryBuilder()
 	eventBuilder := NewEventQueryBuilder()
+	eventApprovalBuilder := NewEventApprovalQueryBuilder()
 
 	// Initialize services
 	tokenService := tokens.NewTokenService(config.JWTSecret)
 	userService := service.NewUserService(tokenService, userRepository, roleRepository, userBuilder, cache)
 	roleService := service.NewRoleService(roleRepository, cache)
 	eventService := service.NewEventService(userRepository, eventRepository, eventApprovalRepository, eventBuilder, cache)
+	eventApprovalServices := service.NewEventApprovalService(eventService, eventApprovalRepository, eventApprovalBuilder)
 
 	// Initialize handlers
 	userHandler := handler.NewUserHandler(userService)
 	roleHandler := handler.NewRoleHandler(roleService)
 	eventHandler := handler.NewEventHandler(eventService)
+	eventApprovalHandler := handler.NewEventApprovalHandler(eventApprovalServices)
 
 	// Register routes
 	userRoutes, userMiddlewares := router.UserRoutes(
@@ -59,6 +62,7 @@ func BuildV1Routes(config *configs.Config, db *gorm.DB, cache caches.Cache, grou
 		userHandler,
 		roleHandler,
 		eventHandler,
+		eventApprovalHandler,
 		middleware,
 		authMiddleware,
 	)
