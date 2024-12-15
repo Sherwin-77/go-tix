@@ -10,7 +10,7 @@ import (
 type EventApprovalRepository interface {
 	BaseRepository
 	GetEventApprovals(ctx context.Context, tx *gorm.DB) ([]entity.EventApproval, error)
-	GetEventApprovalsFiltered(ctx context.Context, tx *gorm.DB, limit int, offset int, order interface{}, query interface{}, args ...interface{}) ([]entity.EventApproval, error)
+	GetUserEventApprovals(ctx context.Context, tx *gorm.DB, userID string) ([]entity.EventApproval, error)
 	GetEventApprovalByID(ctx context.Context, tx *gorm.DB, id string) (*entity.EventApproval, error)
 	CreateEventApproval(ctx context.Context, tx *gorm.DB, eventApproval *entity.EventApproval) error
 	UpdateEventApproval(ctx context.Context, tx *gorm.DB, eventApproval *entity.EventApproval) error
@@ -35,10 +35,10 @@ func (r *eventApprovalRepository) GetEventApprovals(ctx context.Context, tx *gor
 	return eventApprovals, nil
 }
 
-func (r *eventApprovalRepository) GetEventApprovalsFiltered(ctx context.Context, tx *gorm.DB, limit int, offset int, order interface{}, query interface{}, args ...interface{}) ([]entity.EventApproval, error) {
+func (r *eventApprovalRepository) GetUserEventApprovals(ctx context.Context, tx *gorm.DB, userID string) ([]entity.EventApproval, error) {
 	var eventApprovals []entity.EventApproval
 
-	if err := tx.WithContext(ctx).Where(query, args...).Limit(limit).Offset(offset).Order(order).Find(&eventApprovals).Error; err != nil {
+	if err := tx.WithContext(ctx).Where("user_id = ?", userID).Find(&eventApprovals).Error; err != nil {
 		return nil, err
 	}
 
