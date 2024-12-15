@@ -14,6 +14,7 @@ CREATE TABLE event_approvals (
     end_at DATE NOT NULL,
     created_at TIMESTAMP(6) WITH TIME ZONE,
     updated_at TIMESTAMP(6) WITH TIME ZONE,
+    metadata JSONB,
 
     CONSTRAINT event_approvals_user_id_fkey FOREIGN KEY (user_id) REFERENCES users (id)
 );

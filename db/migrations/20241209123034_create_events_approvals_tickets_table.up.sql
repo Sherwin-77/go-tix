@@ -3,8 +3,8 @@ BEGIN;
 CREATE TABLE event_approval_tickets (
     id UUID PRIMARY KEY,
     event_approval_id UUID NOT NULL,
-    category VARCHAR(100),
-    price DECIMAL(12, 2) NOT NULL DEFAULT 0,
+    category VARCHAR(100) NOT NULL,
+    price DECIMAL(12, 2) NOT NULL,
     created_at TIMESTAMP(6) WITH TIME ZONE,
     updated_at TIMESTAMP(6) WITH TIME ZONE,
 
