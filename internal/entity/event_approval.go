@@ -25,5 +25,5 @@ type EventApproval struct {
 
 	User *User `json:"user,omitempty" gorm:"foreignKey:UserID"`
 
-	EventApprovalsTickets []*EventApprovalTicket `json:"event_approvals_tickets,omitempty" gorm:"foreignKey:EventApprovalID"`
+	EventApprovalTickets []*EventApprovalTicket `json:"event_approvals_tickets,omitempty" gorm:"foreignKey:EventApprovalID"`
 }
