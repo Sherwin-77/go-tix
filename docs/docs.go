@@ -50,6 +50,37 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[Admin] Event"
+                ],
+                "summary": "Create Event",
+                "parameters": [
+                    {
+                        "description": "Create Event Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.CreateEventRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
+                        }
+                    }
+                }
             }
         },
         "/admin/events/{id}": {
@@ -90,6 +121,44 @@ const docTemplate = `{
                                     }
                                 }
                             ]
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[Admin] Event"
+                ],
+                "summary": "Update Event",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The Event ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update Event Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UpdateEventRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
                         }
                     }
                 }
@@ -463,7 +532,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UserResponse"
+                                            "type": "object"
                                         }
                                     }
                                 }
@@ -738,6 +807,39 @@ const docTemplate = `{
                 }
             }
         },
+        "/register-event": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[User] Event"
+                ],
+                "summary": "Register Event",
+                "parameters": [
+                    {
+                        "description": "Create Event Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.CreateEventRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/users/role": {
             "patch": {
                 "consumes": [
@@ -792,7 +894,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "description": {
-                    "type": "string"
+                    "$ref": "#/definitions/null.String"
                 },
                 "end_at": {
                     "type": "string"
@@ -801,13 +903,13 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "latitude": {
-                    "type": "number"
+                    "$ref": "#/definitions/null.Float"
                 },
                 "location": {
-                    "type": "string"
+                    "$ref": "#/definitions/null.String"
                 },
                 "longitude": {
-                    "type": "number"
+                    "$ref": "#/definitions/null.Float"
                 },
                 "max_price": {
                     "type": "number"
@@ -819,6 +921,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "start_at": {
+                    "type": "string"
+                },
+                "status": {
                     "type": "string"
                 },
                 "title": {
@@ -836,7 +941,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "description": {
-                    "type": "string"
+                    "$ref": "#/definitions/null.String"
                 },
                 "end_at": {
                     "type": "string"
@@ -845,18 +950,21 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "latitude": {
-                    "type": "number"
+                    "$ref": "#/definitions/null.Float"
                 },
                 "location": {
-                    "type": "string"
+                    "$ref": "#/definitions/null.String"
                 },
                 "longitude": {
-                    "type": "number"
+                    "$ref": "#/definitions/null.Float"
                 },
                 "organizer": {
                     "type": "string"
                 },
                 "start_at": {
+                    "type": "string"
+                },
+                "status": {
                     "type": "string"
                 },
                 "tickets": {
@@ -910,11 +1018,56 @@ const docTemplate = `{
                 }
             }
         },
+        "github_com_sherwin-77_go-tix_internal_http_dto.CreateEventRequest": {
+            "type": "object",
+            "required": [
+                "end_at",
+                "organizer",
+                "start_at",
+                "title"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "maxLength": 2047
+                },
+                "end_at": {
+                    "type": "string"
+                },
+                "latitude": {
+                    "type": "number"
+                },
+                "location": {
+                    "type": "string",
+                    "maxLength": 2047
+                },
+                "longitude": {
+                    "type": "number"
+                },
+                "organizer": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "start_at": {
+                    "type": "string"
+                },
+                "tickets": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.TicketRequestItem"
+                    }
+                },
+                "title": {
+                    "type": "string",
+                    "maxLength": 255
+                }
+            }
+        },
         "github_com_sherwin-77_go-tix_internal_http_dto.EventListResponse": {
             "type": "object",
             "properties": {
                 "description": {
-                    "type": "string"
+                    "$ref": "#/definitions/null.String"
                 },
                 "end_at": {
                     "type": "string"
@@ -923,13 +1076,13 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "latitude": {
-                    "type": "number"
+                    "$ref": "#/definitions/null.Float"
                 },
                 "location": {
-                    "type": "string"
+                    "$ref": "#/definitions/null.String"
                 },
                 "longitude": {
-                    "type": "number"
+                    "$ref": "#/definitions/null.Float"
                 },
                 "max_price": {
                     "type": "number"
@@ -943,6 +1096,9 @@ const docTemplate = `{
                 "start_at": {
                     "type": "string"
                 },
+                "status": {
+                    "type": "string"
+                },
                 "title": {
                     "type": "string"
                 }
@@ -952,7 +1108,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "description": {
-                    "type": "string"
+                    "$ref": "#/definitions/null.String"
                 },
                 "end_at": {
                     "type": "string"
@@ -961,18 +1117,21 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "latitude": {
-                    "type": "number"
+                    "$ref": "#/definitions/null.Float"
                 },
                 "location": {
-                    "type": "string"
+                    "$ref": "#/definitions/null.String"
                 },
                 "longitude": {
-                    "type": "number"
+                    "$ref": "#/definitions/null.Float"
                 },
                 "organizer": {
                     "type": "string"
                 },
                 "start_at": {
+                    "type": "string"
+                },
+                "status": {
                     "type": "string"
                 },
                 "tickets": {
@@ -1030,6 +1189,21 @@ const docTemplate = `{
                 }
             }
         },
+        "github_com_sherwin-77_go-tix_internal_http_dto.TicketRequestItem": {
+            "type": "object",
+            "required": [
+                "price"
+            ],
+            "properties": {
+                "category": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number",
+                    "minimum": 0
+                }
+            }
+        },
         "github_com_sherwin-77_go-tix_internal_http_dto.TicketResponse": {
             "type": "object",
             "properties": {
@@ -1044,6 +1218,17 @@ const docTemplate = `{
                 },
                 "price": {
                     "type": "number"
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.UpdateEventRequest": {
+            "type": "object",
+            "required": [
+                "is_enabled"
+            ],
+            "properties": {
+                "is_enabled": {
+                    "type": "boolean"
                 }
             }
         },
@@ -1134,6 +1319,30 @@ const docTemplate = `{
                 "data": {},
                 "message": {
                     "type": "string"
+                }
+            }
+        },
+        "null.Float": {
+            "type": "object",
+            "properties": {
+                "float64": {
+                    "type": "number"
+                },
+                "valid": {
+                    "description": "Valid is true if Float64 is not NULL",
+                    "type": "boolean"
+                }
+            }
+        },
+        "null.String": {
+            "type": "object",
+            "properties": {
+                "string": {
+                    "type": "string"
+                },
+                "valid": {
+                    "description": "Valid is true if String is not NULL",
+                    "type": "boolean"
                 }
             }
         }

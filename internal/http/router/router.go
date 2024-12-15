@@ -55,6 +55,14 @@ func UserRoutes(
 				validateID,
 			},
 		},
+		{
+			Method:  http.MethodPost,
+			Path:    "/register-event",
+			Handler: eventHandler.RegisterEvent,
+			Middlewares: []echo.MiddlewareFunc{
+				authMiddleware.Authenticated,
+			},
+		},
 	}
 
 	var middlewareFuncs []echo.MiddlewareFunc
@@ -154,6 +162,20 @@ func AdminRoutes(
 			Method:  http.MethodGet,
 			Path:    "/events/:id",
 			Handler: eventHandler.GetEventByID,
+			Middlewares: []echo.MiddlewareFunc{
+				validateID,
+			},
+		},
+		{
+			Method:      http.MethodPost,
+			Path:        "/events",
+			Handler:     eventHandler.CreateEvent,
+			Middlewares: []echo.MiddlewareFunc{},
+		},
+		{
+			Method:  http.MethodPatch,
+			Path:    "/events/:id",
+			Handler: eventHandler.UpdateEvent,
 			Middlewares: []echo.MiddlewareFunc{
 				validateID,
 			},

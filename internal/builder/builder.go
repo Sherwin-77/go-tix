@@ -24,6 +24,7 @@ func BuildV1Routes(config *configs.Config, db *gorm.DB, cache caches.Cache, grou
 	userRepository := repository.NewUserRepository(db)
 	roleRepository := repository.NewRoleRepository(db)
 	eventRepository := repository.NewEventRepository(db)
+	eventApprovalRepository := repository.NewEventApprovalRepository(db)
 
 	// Initialize builders
 	userBuilder := NewUserQueryBuilder()
@@ -33,7 +34,7 @@ func BuildV1Routes(config *configs.Config, db *gorm.DB, cache caches.Cache, grou
 	tokenService := tokens.NewTokenService(config.JWTSecret)
 	userService := service.NewUserService(tokenService, userRepository, roleRepository, userBuilder, cache)
 	roleService := service.NewRoleService(roleRepository, cache)
-	eventService := service.NewEventService(eventRepository, eventBuilder, cache)
+	eventService := service.NewEventService(userRepository, eventRepository, eventApprovalRepository, eventBuilder, cache)
 
 	// Initialize handlers
 	userHandler := handler.NewUserHandler(userService)

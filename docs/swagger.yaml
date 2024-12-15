@@ -5,17 +5,17 @@ definitions:
       created_at:
         type: string
       description:
-        type: string
+        $ref: '#/definitions/null.String'
       end_at:
         type: string
       id:
         type: string
       latitude:
-        type: number
+        $ref: '#/definitions/null.Float'
       location:
-        type: string
+        $ref: '#/definitions/null.String'
       longitude:
-        type: number
+        $ref: '#/definitions/null.Float'
       max_price:
         type: number
       min_price:
@@ -23,6 +23,8 @@ definitions:
       organizer:
         type: string
       start_at:
+        type: string
+      status:
         type: string
       title:
         type: string
@@ -34,20 +36,22 @@ definitions:
       created_at:
         type: string
       description:
-        type: string
+        $ref: '#/definitions/null.String'
       end_at:
         type: string
       id:
         type: string
       latitude:
-        type: number
+        $ref: '#/definitions/null.Float'
       location:
-        type: string
+        $ref: '#/definitions/null.String'
       longitude:
-        type: number
+        $ref: '#/definitions/null.Float'
       organizer:
         type: string
       start_at:
+        type: string
+      status:
         type: string
       tickets:
         items:
@@ -83,20 +87,52 @@ definitions:
     - action
     - id
     type: object
+  github_com_sherwin-77_go-tix_internal_http_dto.CreateEventRequest:
+    properties:
+      description:
+        maxLength: 2047
+        type: string
+      end_at:
+        type: string
+      latitude:
+        type: number
+      location:
+        maxLength: 2047
+        type: string
+      longitude:
+        type: number
+      organizer:
+        maxLength: 255
+        type: string
+      start_at:
+        type: string
+      tickets:
+        items:
+          $ref: '#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.TicketRequestItem'
+        type: array
+      title:
+        maxLength: 255
+        type: string
+    required:
+    - end_at
+    - organizer
+    - start_at
+    - title
+    type: object
   github_com_sherwin-77_go-tix_internal_http_dto.EventListResponse:
     properties:
       description:
-        type: string
+        $ref: '#/definitions/null.String'
       end_at:
         type: string
       id:
         type: string
       latitude:
-        type: number
+        $ref: '#/definitions/null.Float'
       location:
-        type: string
+        $ref: '#/definitions/null.String'
       longitude:
-        type: number
+        $ref: '#/definitions/null.Float'
       max_price:
         type: number
       min_price:
@@ -105,26 +141,30 @@ definitions:
         type: string
       start_at:
         type: string
+      status:
+        type: string
       title:
         type: string
     type: object
   github_com_sherwin-77_go-tix_internal_http_dto.EventResponse:
     properties:
       description:
-        type: string
+        $ref: '#/definitions/null.String'
       end_at:
         type: string
       id:
         type: string
       latitude:
-        type: number
+        $ref: '#/definitions/null.Float'
       location:
-        type: string
+        $ref: '#/definitions/null.String'
       longitude:
-        type: number
+        $ref: '#/definitions/null.Float'
       organizer:
         type: string
       start_at:
+        type: string
+      status:
         type: string
       tickets:
         items:
@@ -162,6 +202,16 @@ definitions:
       name:
         type: string
     type: object
+  github_com_sherwin-77_go-tix_internal_http_dto.TicketRequestItem:
+    properties:
+      category:
+        type: string
+      price:
+        minimum: 0
+        type: number
+    required:
+    - price
+    type: object
   github_com_sherwin-77_go-tix_internal_http_dto.TicketResponse:
     properties:
       category:
@@ -172,6 +222,13 @@ definitions:
         type: string
       price:
         type: number
+    type: object
+  github_com_sherwin-77_go-tix_internal_http_dto.UpdateEventRequest:
+    properties:
+      is_enabled:
+        type: boolean
+    required:
+    - is_enabled
     type: object
   github_com_sherwin-77_go-tix_internal_http_dto.UpdateRoleRequest:
     properties:
@@ -233,6 +290,22 @@ definitions:
       message:
         type: string
     type: object
+  null.Float:
+    properties:
+      float64:
+        type: number
+      valid:
+        description: Valid is true if Float64 is not NULL
+        type: boolean
+    type: object
+  null.String:
+    properties:
+      string:
+        type: string
+      valid:
+        description: Valid is true if String is not NULL
+        type: boolean
+    type: object
 host: localhost:8080
 info:
   contact: {}
@@ -261,6 +334,26 @@ paths:
       summary: Get All Events
       tags:
       - '[Admin] Event'
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create Event Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.CreateEventRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response'
+      summary: Create Event
+      tags:
+      - '[Admin] Event'
   /admin/events/{id}:
     get:
       consumes:
@@ -284,6 +377,31 @@ paths:
                   $ref: '#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.AdminEventResponse'
               type: object
       summary: Get Event By ID
+      tags:
+      - '[Admin] Event'
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: The Event ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update Event Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UpdateEventRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response'
+      summary: Update Event
       tags:
       - '[Admin] Event'
   /admin/roles:
@@ -477,7 +595,7 @@ paths:
             - $ref: '#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UserResponse'
+                  type: object
               type: object
       summary: Delete User
       tags:
@@ -660,6 +778,27 @@ paths:
       summary: Register User
       tags:
       - User
+  /register-event:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create Event Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.CreateEventRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response'
+      summary: Register Event
+      tags:
+      - '[User] Event'
   /users/role:
     patch:
       consumes:

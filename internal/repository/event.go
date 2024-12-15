@@ -10,6 +10,7 @@ type EventRepository interface {
 	BaseRepository
 	GetEvents(ctx context.Context, tx *gorm.DB) ([]entity.Event, error)
 	GetEventsWithMinMaxPrice(ctx context.Context, tx *gorm.DB) ([]entity.EventWithMinMaxPrice, error)
+	GetActiveEventsWithMinMaxPrice(ctx context.Context, tx *gorm.DB) ([]entity.EventWithMinMaxPrice, error)
 	GetEventByID(ctx context.Context, tx *gorm.DB, id string) (*entity.Event, error)
 	CreateEvent(ctx context.Context, tx *gorm.DB, event *entity.Event) error
 	UpdateEvent(ctx context.Context, tx *gorm.DB, event *entity.Event) error
@@ -38,6 +39,20 @@ func (r *eventRepository) GetEventsWithMinMaxPrice(ctx context.Context, tx *gorm
 	var events []entity.EventWithMinMaxPrice
 
 	if err := tx.WithContext(ctx).Find(&events).Error; err != nil {
+		return nil, err
+	}
+
+	return events, nil
+}
+
+func (r *eventRepository) GetActiveEventsWithMinMaxPrice(ctx context.Context, tx *gorm.DB) ([]entity.EventWithMinMaxPrice, error) {
+	var events []entity.EventWithMinMaxPrice
+
+	if err := tx.WithContext(ctx).
+		Where("status = ?", "active").
+		Where("start_at >= now()").
+		Where("end_at <= now()").
+		Find(&events).Error; err != nil {
 		return nil, err
 	}
 

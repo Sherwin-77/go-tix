@@ -7,7 +7,6 @@ import (
 )
 
 type EventApprovalMetadata struct {
-	AdditionalInfo string `json:"additional_info"`
 }
 
 type EventApproval struct {
@@ -25,4 +24,6 @@ type EventApproval struct {
 	Metadata    datatypes.JSONType[EventApprovalMetadata] `json:"metadata" gorm:"type:jsonb"`
 
 	User *User `json:"user,omitempty" gorm:"foreignKey:UserID"`
+
+	EventApprovalsTickets []*EventApprovalTicket `json:"event_approvals_tickets,omitempty" gorm:"foreignKey:EventApprovalID"`
 }
