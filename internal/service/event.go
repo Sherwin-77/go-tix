@@ -162,6 +162,10 @@ func (s *eventService) UpdateEvent(ctx context.Context, request dto.UpdateEventR
 			return echo.NewHTTPError(http.StatusNotFound, "Event not found")
 		}
 
+		if event.Status == string(enum.EventStatusFinished) {
+			return echo.NewHTTPError(http.StatusUnprocessableEntity, "Cannot update finished event")
+		}
+
 		isEnabled := null.BoolFromPtr(request.IsEnabled).ValueOrZero()
 		// Created event can only update is_enabled
 		if !isEnabled {
@@ -222,6 +226,7 @@ func (s *eventService) RegisterEvent(ctx context.Context, request dto.CreateEven
 		}
 
 		eventApproval := entity.EventApproval{
+			Status:      string(enum.EventApprovalStatusPending),
 			Title:       request.Title,
 			Description: null.StringFromPtr(request.Description),
 			Organizer:   request.Organizer,
