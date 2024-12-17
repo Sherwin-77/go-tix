@@ -23,40 +23,43 @@ type eventApprovalRepository struct {
 }
 
 func NewEventApprovalRepository(db *gorm.DB) EventApprovalRepository {
-	return &eventApprovalRepository{baseRepository: baseRepository{db}}
+	return &eventApprovalRepository{
+		baseRepository: baseRepository{
+			db: db,
+		},
+	}
 }
 
-// GetEventApprovals mengambil semua event approval
+// GetEventApprovals retrieves all event approvals
 func (r *eventApprovalRepository) GetEventApprovals(ctx context.Context) ([]entity.EventApproval, error) {
 	var eventApprovals []entity.EventApproval
-	err := r.db.WithContext(ctx).Find(&eventApprovals).Error
-	if err != nil {
+
+	if err := r.db.WithContext(ctx).Find(&eventApprovals).Error; err != nil {
 		return nil, err
 	}
+
 	return eventApprovals, nil
 }
 
-// GetEventApprovalByID mengambil detail event approval berdasarkan ID
+// GetEventApprovalByID retrieves an event approval by ID
 func (r *eventApprovalRepository) GetEventApprovalByID(ctx context.Context, id string) (*entity.EventApproval, error) {
-	var eventApproval entity.EventApproval
-	err := r.db.WithContext(ctx).Where("id = ?", id).First(&eventApproval).Error
+	var approval entity.EventApproval
+
+	err := r.db.WithContext(ctx).Where("id = ?", id).First(&approval).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
 		}
+
 		return nil, err
 	}
-	return &eventApproval, nil
+
+	return &approval, nil
 }
 
-// HandleEventApproval menangani persetujuan atau penolakan event
+// HandleEventApproval updates the status of an event approval
 func (r *eventApprovalRepository) HandleEventApproval(ctx context.Context, eventApproval *entity.EventApproval) error {
-	// Update status event approval
-	err := r.db.WithContext(ctx).Save(eventApproval).Error
-	if err != nil {
-		return err
-	}
-	return nil
+	return r.db.WithContext(ctx).Save(eventApproval).Error
 }
 
 // CreateEventApproval membuat event approval baru
@@ -68,18 +71,14 @@ func (r *eventApprovalRepository) CreateEventApproval(ctx context.Context, event
 	return nil
 }
 
-// UpdateEventApproval memperbarui event approval
-func (r *eventApprovalRepository) UpdateEventApproval(ctx context.Context, eventApproval *entity.EventApproval) error {
-	err := r.db.WithContext(ctx).Save(eventApproval).Error
-	if err != nil {
-		return err
-	}
-	return nil
+// UpdateEventApproval updates an event approval
+func (r *eventApprovalRepository) UpdateEventApproval(ctx context.Context, updatedEventApproval *entity.EventApproval) error {
+	return r.db.WithContext(ctx).Save(updatedEventApproval).Error
 }
 
-// DeleteEventApproval menghapus event approval
+// DeleteEventApproval deletes an event approval
 func (r *eventApprovalRepository) DeleteEventApproval(ctx context.Context, id string) error {
-	err := r.db.WithContext(ctx).Where("id = ?", id).Delete(&entity.EventApproval{}).Error
+	err := r.db.WithContext(ctx).Delete(&entity.EventApproval{}, "id = ?", id).Error
 	if err != nil {
 		return err
 	}
