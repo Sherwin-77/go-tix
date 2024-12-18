@@ -7,7 +7,6 @@ import (
 )
 
 type EventApprovalTicketsMetadata struct {
-	AdditionalInfo string `json:"additional_info"`
 }
 
 type EventApprovalTicket struct {

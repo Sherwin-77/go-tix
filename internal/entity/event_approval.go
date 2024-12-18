@@ -8,7 +8,6 @@ import (
 )
 
 type EventApprovalMetadata struct {
-	AdditionalInfo string `json:"additional_info"`
 }
 
 type EventApproval struct {
@@ -25,6 +24,5 @@ type EventApproval struct {
 	EndAt       time.Time                                 `json:"end_at" gorm:"type:timestamp(6) with time zone;not null"`
 	CreatedAt   time.Time                                 `json:"created_at" gorm:"type:timestamp(6) with time zone;not null"`
 	Metadata    datatypes.JSONType[EventApprovalMetadata] `json:"metadata" gorm:"type:jsonb"`
-
-	User *User `json:"user,omitempty" gorm:"foreignKey:UserID"`
+	User        *User                                     `json:"user,omitempty" gorm:"foreignKey:UserID"`
 }
