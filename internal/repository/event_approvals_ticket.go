@@ -26,47 +26,23 @@ func NewEventApprovalTicketRepository(db *gorm.DB) EventApprovalTicketRepository
 
 func (r *eventApprovalTicketRepository) GetEventApprovalsTickets(ctx context.Context) ([]entity.EventApproval, error) {
 	var eventApprovals []entity.EventApproval
-	err := r.db.WithContext(ctx).Find(&eventApprovals).Error
-	if err != nil {
-		return nil, err
-	}
-
-	return eventApprovals, nil
+	return eventApprovals, r.db.WithContext(ctx).Find(&eventApprovals).Error
 }
 
 func (r *eventApprovalTicketRepository) GetEventApprovalsByEventIDTickets(ctx context.Context, id int64) ([]entity.EventApproval, error) {
 	var eventApprovals []entity.EventApproval
-	err := r.db.WithContext(ctx).Where("event_id = ?", id).Find(&eventApprovals).Error
-	if err != nil {
-		return nil, err
-	}
-
-	return eventApprovals, nil
+	return eventApprovals, r.db.WithContext(ctx).Where("event_id = ?", id).Find(&eventApprovals).Error
 }
 
 func (r *eventApprovalTicketRepository) CreateEventApprovalTickets(ctx context.Context, eventApproval *entity.EventApproval) error {
-	err := r.db.WithContext(ctx).Create(eventApproval).Error
-	if err != nil {
-		return err
-	}
+	return r.db.WithContext(ctx).Create(eventApproval).Error
 
-	return nil
 }
 
 func (r *eventApprovalTicketRepository) UpdateEventApprovalTickets(ctx context.Context, eventApproval *entity.EventApproval) error {
-	err := r.db.WithContext(ctx).Save(eventApproval).Error
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return r.db.WithContext(ctx).Save(eventApproval).Error
 }
 
 func (r *eventApprovalTicketRepository) DeleteEventApprovalTickets(ctx context.Context, id int64) error {
-	err := r.db.WithContext(ctx).Delete(&entity.EventApproval{}, id).Error
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return r.db.WithContext(ctx).Delete(&entity.EventApproval{}, id).Error
 }

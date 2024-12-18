@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"errors"
 
 	"github.com/sherwin-77/go-tix/internal/entity"
 	"gorm.io/gorm"
@@ -33,28 +32,14 @@ func NewEventApprovalRepository(db *gorm.DB) EventApprovalRepository {
 // GetEventApprovals retrieves all event approvals
 func (r *eventApprovalRepository) GetEventApprovals(ctx context.Context) ([]entity.EventApproval, error) {
 	var eventApprovals []entity.EventApproval
-
-	if err := r.db.WithContext(ctx).Find(&eventApprovals).Error; err != nil {
-		return nil, err
-	}
-
-	return eventApprovals, nil
+	return eventApprovals, r.db.WithContext(ctx).Find(&eventApprovals).Error
 }
 
 // GetEventApprovalByID retrieves an event approval by ID
 func (r *eventApprovalRepository) GetEventApprovalByID(ctx context.Context, id string) (*entity.EventApproval, error) {
 	var approval entity.EventApproval
+	return &approval, r.db.WithContext(ctx).First(&approval, "id = ?", id).Error
 
-	err := r.db.WithContext(ctx).Where("id = ?", id).First(&approval).Error
-	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, nil
-		}
-
-		return nil, err
-	}
-
-	return &approval, nil
 }
 
 // HandleEventApproval updates the status of an event approval
@@ -64,11 +49,7 @@ func (r *eventApprovalRepository) HandleEventApproval(ctx context.Context, event
 
 // CreateEventApproval membuat event approval baru
 func (r *eventApprovalRepository) CreateEventApproval(ctx context.Context, eventApproval *entity.EventApproval) error {
-	err := r.db.WithContext(ctx).Create(eventApproval).Error
-	if err != nil {
-		return err
-	}
-	return nil
+	return r.db.WithContext(ctx).Create(eventApproval).Error
 }
 
 // UpdateEventApproval updates an event approval
@@ -78,9 +59,5 @@ func (r *eventApprovalRepository) UpdateEventApproval(ctx context.Context, updat
 
 // DeleteEventApproval deletes an event approval
 func (r *eventApprovalRepository) DeleteEventApproval(ctx context.Context, id string) error {
-	err := r.db.WithContext(ctx).Delete(&entity.EventApproval{}, "id = ?", id).Error
-	if err != nil {
-		return err
-	}
-	return nil
+	return r.db.WithContext(ctx).Delete(&entity.EventApproval{}, "id = ?", id).Error
 }
