@@ -15,6 +15,285 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/admin/event-approvals": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[Admin] Event Approval"
+                ],
+                "summary": "Get Event Approvals",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.EventApprovalResponse"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/event-approvals/{id}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[Admin] Event Approval"
+                ],
+                "summary": "Get Event Approval By ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The Event Approval ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.EventApprovalResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[Admin] Event Approval"
+                ],
+                "summary": "Handle Event Approval",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The Event Approval ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Handle Event Approval Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.HandleEventApprovalRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.EventApprovalResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/events": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[Admin] Event"
+                ],
+                "summary": "Get All Events",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.AdminEventListResponse"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[Admin] Event"
+                ],
+                "summary": "Create Event",
+                "parameters": [
+                    {
+                        "description": "Create Event Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.CreateEventRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/events/{id}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[Admin] Event"
+                ],
+                "summary": "Get Event By ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The Event ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.AdminEventResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[Admin] Event"
+                ],
+                "summary": "Update Event",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The Event ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update Event Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UpdateEventRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/roles": {
             "get": {
                 "consumes": [
@@ -443,6 +722,176 @@ const docTemplate = `{
                 }
             }
         },
+        "/bill": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[User] Sale Invoice"
+                ],
+                "summary": "Bill",
+                "parameters": [
+                    {
+                        "description": "Checkout Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.CheckoutRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.BillResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/checkout": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[User] Sale Invoice"
+                ],
+                "summary": "Checkout",
+                "parameters": [
+                    {
+                        "description": "Checkout Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.CheckoutRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.CheckoutResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/events": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[User] Event"
+                ],
+                "summary": "Get User Events",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.EventListResponse"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{id}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[User] Event"
+                ],
+                "summary": "Get Event By ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The Event ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.EventResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/login": {
             "post": {
                 "consumes": [
@@ -578,6 +1027,113 @@ const docTemplate = `{
                 }
             }
         },
+        "/register-event": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[User] Event"
+                ],
+                "summary": "Register Event",
+                "parameters": [
+                    {
+                        "description": "Create Event Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.CreateEventRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/sale-invoices": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[User] Sale Invoice"
+                ],
+                "summary": "Get User Sale Invoices",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.SaleInvoiceListResponse"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/sale-invoices/{id}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[User] Sale Invoice"
+                ],
+                "summary": "Get User Sale Invoice By ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Sale Invoice ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.SaleInvoiceResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/users/role": {
             "patch": {
                 "consumes": [
@@ -625,6 +1181,146 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "github_com_sherwin-77_go-tix_internal_http_dto.AdminEventListResponse": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "$ref": "#/definitions/null.String"
+                },
+                "end_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "latitude": {
+                    "$ref": "#/definitions/null.Float"
+                },
+                "location": {
+                    "$ref": "#/definitions/null.String"
+                },
+                "longitude": {
+                    "$ref": "#/definitions/null.Float"
+                },
+                "max_price": {
+                    "type": "number"
+                },
+                "min_price": {
+                    "type": "number"
+                },
+                "organizer": {
+                    "type": "string"
+                },
+                "start_at": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.AdminEventResponse": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "$ref": "#/definitions/null.String"
+                },
+                "end_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "latitude": {
+                    "$ref": "#/definitions/null.Float"
+                },
+                "location": {
+                    "$ref": "#/definitions/null.String"
+                },
+                "longitude": {
+                    "$ref": "#/definitions/null.Float"
+                },
+                "organizer": {
+                    "type": "string"
+                },
+                "start_at": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "tickets": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.TicketResponse"
+                    }
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.BillItemResponse": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "qty": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "number"
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.BillResponse": {
+            "type": "object",
+            "properties": {
+                "discount": {
+                    "type": "number"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.BillItemResponse"
+                    }
+                },
+                "payment_fee": {
+                    "type": "number"
+                },
+                "service_fee": {
+                    "type": "number"
+                },
+                "subtotal": {
+                    "type": "number"
+                },
+                "total": {
+                    "type": "number"
+                },
+                "vat": {
+                    "type": "number"
+                }
+            }
+        },
         "github_com_sherwin-77_go-tix_internal_http_dto.ChangeRoleRequest": {
             "type": "object",
             "required": [
@@ -659,6 +1355,259 @@ const docTemplate = `{
                 },
                 "id": {
                     "type": "string"
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.CheckoutRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "full_name",
+                "items",
+                "phone_number"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "full_name": {
+                    "type": "string"
+                },
+                "identity_card_number": {
+                    "type": "string"
+                },
+                "items": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.CheckoutRequestItem"
+                    }
+                },
+                "phone_number": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.CheckoutRequestItem": {
+            "type": "object",
+            "required": [
+                "qty",
+                "ticket_id"
+            ],
+            "properties": {
+                "qty": {
+                    "description": "Notice hardcode limit, change if needed",
+                    "type": "integer",
+                    "maximum": 5,
+                    "minimum": 1
+                },
+                "ticket_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.CheckoutResponse": {
+            "type": "object",
+            "properties": {
+                "expired_at": {
+                    "type": "string"
+                },
+                "invoice_url": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.CreateEventRequest": {
+            "type": "object",
+            "required": [
+                "end_at",
+                "organizer",
+                "start_at",
+                "title"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "maxLength": 2047
+                },
+                "end_at": {
+                    "type": "string"
+                },
+                "latitude": {
+                    "type": "number"
+                },
+                "location": {
+                    "type": "string",
+                    "maxLength": 2047
+                },
+                "longitude": {
+                    "type": "number"
+                },
+                "organizer": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "start_at": {
+                    "type": "string"
+                },
+                "tickets": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.TicketRequestItem"
+                    }
+                },
+                "title": {
+                    "type": "string",
+                    "maxLength": 255
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.EventApprovalResponse": {
+            "type": "object",
+            "properties": {
+                "endAt": {
+                    "type": "string"
+                },
+                "event_approvals_tickets": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.EventApprovalTicketResponse"
+                    }
+                },
+                "id": {
+                    "type": "string"
+                },
+                "latitude": {
+                    "$ref": "#/definitions/null.Float"
+                },
+                "location": {
+                    "$ref": "#/definitions/null.String"
+                },
+                "longitude": {
+                    "$ref": "#/definitions/null.Float"
+                },
+                "organizer": {
+                    "type": "string"
+                },
+                "startAt": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.UserResponse"
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.EventApprovalTicketResponse": {
+            "type": "object",
+            "properties": {
+                "category": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.EventListResponse": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "$ref": "#/definitions/null.String"
+                },
+                "end_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "latitude": {
+                    "$ref": "#/definitions/null.Float"
+                },
+                "location": {
+                    "$ref": "#/definitions/null.String"
+                },
+                "longitude": {
+                    "$ref": "#/definitions/null.Float"
+                },
+                "max_price": {
+                    "type": "number"
+                },
+                "min_price": {
+                    "type": "number"
+                },
+                "organizer": {
+                    "type": "string"
+                },
+                "start_at": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.EventResponse": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "$ref": "#/definitions/null.String"
+                },
+                "end_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "latitude": {
+                    "$ref": "#/definitions/null.Float"
+                },
+                "location": {
+                    "$ref": "#/definitions/null.String"
+                },
+                "longitude": {
+                    "$ref": "#/definitions/null.Float"
+                },
+                "organizer": {
+                    "type": "string"
+                },
+                "start_at": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "tickets": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.TicketResponse"
+                    }
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.HandleEventApprovalRequest": {
+            "type": "object",
+            "required": [
+                "action"
+            ],
+            "properties": {
+                "action": {
+                    "type": "string",
+                    "enum": [
+                        "approve",
+                        "reject"
+                    ]
                 }
             }
         },
@@ -703,6 +1652,174 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string"
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.SaleInvoiceItemResponse": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "qty": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "number"
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.SaleInvoiceListResponse": {
+            "type": "object",
+            "properties": {
+                "canceled_at": {
+                    "type": "string"
+                },
+                "completed_at": {
+                    "type": "string"
+                },
+                "due_at": {
+                    "type": "string"
+                },
+                "expired_at": {
+                    "type": "string"
+                },
+                "number": {
+                    "type": "string"
+                },
+                "refunded_at": {
+                    "type": "string"
+                },
+                "rejected_at": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "subtotal": {
+                    "type": "number"
+                },
+                "total": {
+                    "type": "number"
+                },
+                "transaction_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.SaleInvoiceResponse": {
+            "type": "object",
+            "properties": {
+                "canceled_at": {
+                    "type": "string"
+                },
+                "completed_at": {
+                    "type": "string"
+                },
+                "discount": {
+                    "type": "number"
+                },
+                "due_at": {
+                    "type": "string"
+                },
+                "expired_at": {
+                    "type": "string"
+                },
+                "number": {
+                    "type": "string"
+                },
+                "payment_fee": {
+                    "type": "number"
+                },
+                "refunded_at": {
+                    "type": "string"
+                },
+                "rejected_at": {
+                    "type": "string"
+                },
+                "sale_invoice_items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.SaleInvoiceItemResponse"
+                    }
+                },
+                "service_fee": {
+                    "type": "number"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "subtotal": {
+                    "type": "number"
+                },
+                "total": {
+                    "type": "number"
+                },
+                "transaction_at": {
+                    "type": "string"
+                },
+                "user_info": {
+                    "type": "object",
+                    "properties": {
+                        "email": {
+                            "type": "string"
+                        },
+                        "full_name": {
+                            "type": "string"
+                        },
+                        "identity_card_number": {
+                            "$ref": "#/definitions/null.String"
+                        },
+                        "phone_number": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "vat": {
+                    "type": "number"
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.TicketRequestItem": {
+            "type": "object",
+            "required": [
+                "price"
+            ],
+            "properties": {
+                "category": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number",
+                    "minimum": 0
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.TicketResponse": {
+            "type": "object",
+            "properties": {
+                "category": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.UpdateEventRequest": {
+            "type": "object",
+            "required": [
+                "is_enabled"
+            ],
+            "properties": {
+                "is_enabled": {
+                    "type": "boolean"
                 }
             }
         },
@@ -793,6 +1910,30 @@ const docTemplate = `{
                 "data": {},
                 "message": {
                     "type": "string"
+                }
+            }
+        },
+        "null.Float": {
+            "type": "object",
+            "properties": {
+                "float64": {
+                    "type": "number"
+                },
+                "valid": {
+                    "description": "Valid is true if Float64 is not NULL",
+                    "type": "boolean"
+                }
+            }
+        },
+        "null.String": {
+            "type": "object",
+            "properties": {
+                "string": {
+                    "type": "string"
+                },
+                "valid": {
+                    "description": "Valid is true if String is not NULL",
+                    "type": "boolean"
                 }
             }
         }
