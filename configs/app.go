@@ -15,7 +15,6 @@ type Config struct {
 	Port      string
 	Postgres  PostgresConfig
 	Redis     RedisConfig
-	Midtrans  MidtransConfig
 }
 
 type PostgresConfig struct {
@@ -31,12 +30,6 @@ type RedisConfig struct {
 	Port     string
 	Password string
 	DB       int
-}
-
-type MidtransConfig struct {
-	ServerKey string
-	ClientKey string
-	Env       string
 }
 
 func GetConfig() *Config {
@@ -58,11 +51,6 @@ func GetConfig() *Config {
 			Port:     os.Getenv("REDIS_PORT"),
 			Password: os.Getenv("REDIS_PASSWORD"),
 			DB:       0,
-		},
-		Midtrans: MidtransConfig{
-			ServerKey: os.Getenv("MIDTRANS_SERVER_KEY"),
-			ClientKey: os.Getenv("MIDTRANS_CLIENT_KEY"),
-			Env:       os.Getenv("MIDTRANS_ENV"),
 		},
 	}
 

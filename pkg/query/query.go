@@ -37,7 +37,6 @@ type SortParam struct {
 	FieldName    string
 	InternalName string
 	Direction    SortDirection
-	Callback     func(db *gorm.DB, isDescending bool) *gorm.DB
 }
 
 type Builder interface {
@@ -45,15 +44,13 @@ type Builder interface {
 }
 
 type builder struct {
-	InitBuilder    func(db *gorm.DB) *gorm.DB
 	AllowedFilters []FilterParam
 	AllowedSorts   []SortParam
 	DefaultSort    SortParam
 }
 
-func NewBuilder(initBuilder func(db *gorm.DB) *gorm.DB, allowedFilters []FilterParam, allowedSorts []SortParam, defaultSort SortParam) Builder {
+func NewBuilder(allowedFilters []FilterParam, allowedSorts []SortParam, defaultSort SortParam) Builder {
 	return &builder{
-		InitBuilder:    initBuilder,
 		AllowedFilters: allowedFilters,
 		AllowedSorts:   allowedSorts,
 		DefaultSort:    defaultSort,
@@ -88,10 +85,9 @@ func (b *builder) extractFilters(queryParams url.Values, allowedFilters []Filter
 }
 
 // extractSorting parses query params for sorting (field and direction)
-func (b *builder) extractSorting(queryParams url.Values, allowedSorts []SortParam, defaultSort SortParam) (string, SortDirection, func(db *gorm.DB, isDescending bool) *gorm.DB) {
+func (b *builder) extractSorting(queryParams url.Values, allowedSorts []SortParam, defaultSort SortParam) (string, SortDirection) {
 	sortField := queryParams.Get("sort")
 	sortDirection := SortDirectionAscending
-	var sortCallback func(db *gorm.DB, isDescending bool) *gorm.DB
 	if strings.HasPrefix(sortField, "-") {
 		sortDirection = SortDirectionDescending
 		sortField = strings.TrimPrefix(sortField, "-")
@@ -102,7 +98,6 @@ func (b *builder) extractSorting(queryParams url.Values, allowedSorts []SortPara
 		if sort.FieldName == sortField {
 			sortField = b.getSortField(sort)
 			isValidSort = true
-			sortCallback = sort.Callback
 			break
 		}
 	}
@@ -112,7 +107,7 @@ func (b *builder) extractSorting(queryParams url.Values, allowedSorts []SortPara
 		sortDirection = defaultSort.Direction
 	}
 
-	return sortField, sortDirection, sortCallback
+	return sortField, sortDirection
 }
 
 // extractPagination parses query params for pagination (limit and page)
@@ -157,10 +152,6 @@ func (b *builder) getSortMeta() []response.SortMeta {
 }
 
 func (b *builder) ApplyBuilder(db *gorm.DB, queryParams url.Values, model interface{}) (*gorm.DB, *response.Meta) {
-	if b.InitBuilder != nil {
-		db = b.InitBuilder(db)
-	}
-
 	filters := b.extractFilters(queryParams, b.AllowedFilters)
 
 	for _, filter := range b.AllowedFilters {
@@ -186,12 +177,8 @@ func (b *builder) ApplyBuilder(db *gorm.DB, queryParams url.Values, model interf
 	var count int64
 	db.Model(model).Count(&count)
 
-	sortField, sortDirection, sortCallback := b.extractSorting(queryParams, b.AllowedSorts, b.DefaultSort)
-	if sortCallback != nil {
-		db = sortCallback(db, sortDirection == SortDirectionDescending)
-	} else {
-		db = db.Order(sortField + " " + string(sortDirection))
-	}
+	sortField, sortDirection := b.extractSorting(queryParams, b.AllowedSorts, b.DefaultSort)
+	db = db.Order(sortField + " " + string(sortDirection))
 
 	limit, page := b.extractPagination(queryParams)
 	db = db.Offset((page - 1) * limit).Limit(limit)

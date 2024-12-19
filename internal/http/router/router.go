@@ -9,15 +9,7 @@ import (
 	"github.com/sherwin-77/go-tix/pkg/route"
 )
 
-func UserRoutes(
-	userHandler handler.UserHandler,
-	eventHandler handler.EventHandler,
-	saleInvoiceHandler handler.SaleInvoiceHandler,
-	authMiddleware middlewares.AuthMiddleware,
-	middleware middlewares.Middleware,
-) ([]route.Route, []echo.MiddlewareFunc) {
-	validateID := middleware.ValidateUUID([]string{"id"})
-
+func UserRoutes(userHandler handler.UserHandler, authMiddleware middlewares.AuthMiddleware) ([]route.Route, []echo.MiddlewareFunc) {
 	routes := []route.Route{
 		{
 			Method:      http.MethodPost,
@@ -39,64 +31,6 @@ func UserRoutes(
 				authMiddleware.Authenticated,
 			},
 		},
-		{
-			Method:  http.MethodGet,
-			Path:    "/events",
-			Handler: eventHandler.GetUserEvents,
-			Middlewares: []echo.MiddlewareFunc{
-				authMiddleware.Authenticated,
-			},
-		},
-		{
-			Method:  http.MethodGet,
-			Path:    "/events/:id",
-			Handler: eventHandler.GetUserEventByID,
-			Middlewares: []echo.MiddlewareFunc{
-				authMiddleware.Authenticated,
-				validateID,
-			},
-		},
-		{
-			Method:  http.MethodPost,
-			Path:    "/register-event",
-			Handler: eventHandler.RegisterEvent,
-			Middlewares: []echo.MiddlewareFunc{
-				authMiddleware.Authenticated,
-			},
-		},
-		{
-			Method:  http.MethodGet,
-			Path:    "/sale-invoices",
-			Handler: saleInvoiceHandler.GetUserSaleInvoices,
-			Middlewares: []echo.MiddlewareFunc{
-				authMiddleware.Authenticated,
-			},
-		},
-		{
-			Method:  http.MethodGet,
-			Path:    "/sale-invoices/:id",
-			Handler: saleInvoiceHandler.GetUserSaleInvoiceByID,
-			Middlewares: []echo.MiddlewareFunc{
-				authMiddleware.Authenticated,
-				validateID,
-			},
-		},
-		{
-			Method:  http.MethodPost,
-			Path:    "/bill",
-			Handler: saleInvoiceHandler.Bill,
-			Middlewares: []echo.MiddlewareFunc{
-				authMiddleware.Authenticated,
-			},
-		},
-		{
-			Method:  http.MethodPost,
-			Path:    "/checkout",
-			Handler: saleInvoiceHandler.Checkout,
-			Middlewares: []echo.MiddlewareFunc{
-				authMiddleware.Authenticated,
-			},
-		},
 	}
 
 	var middlewareFuncs []echo.MiddlewareFunc
@@ -104,16 +38,7 @@ func UserRoutes(
 	return routes, middlewareFuncs
 }
 
-func AdminRoutes(
-	userHandler handler.UserHandler,
-	roleHandler handler.RoleHandler,
-	eventHandler handler.EventHandler,
-	eventApprovalHandler handler.EventApprovalHandler,
-	middleware middlewares.Middleware,
-	authMiddleware middlewares.AuthMiddleware,
-) ([]route.Route, []echo.MiddlewareFunc) {
-	validateID := middleware.ValidateUUID([]string{"id"})
-
+func AdminRoutes(userHandler handler.UserHandler, roleHandler handler.RoleHandler, middleware middlewares.Middleware, authMiddleware middlewares.AuthMiddleware) ([]route.Route, []echo.MiddlewareFunc) {
 	routes := []route.Route{
 		{
 			Method:      http.MethodGet,
@@ -132,7 +57,7 @@ func AdminRoutes(
 			Path:    "/users/:id",
 			Handler: userHandler.UpdateUser,
 			Middlewares: []echo.MiddlewareFunc{
-				validateID,
+				middleware.ValidateUUID([]string{"id"}),
 			},
 		},
 		{
@@ -140,7 +65,7 @@ func AdminRoutes(
 			Path:    "/users/:id/role",
 			Handler: userHandler.ChangeRole,
 			Middlewares: []echo.MiddlewareFunc{
-				validateID,
+				middleware.ValidateUUID([]string{"id"}),
 			},
 		},
 		{
@@ -148,7 +73,7 @@ func AdminRoutes(
 			Path:    "/users/:id",
 			Handler: userHandler.GetUserByID,
 			Middlewares: []echo.MiddlewareFunc{
-				validateID,
+				middleware.ValidateUUID([]string{"id"}),
 			},
 		},
 		{
@@ -168,7 +93,7 @@ func AdminRoutes(
 			Path:    "/roles/:id",
 			Handler: roleHandler.GetRoleByID,
 			Middlewares: []echo.MiddlewareFunc{
-				validateID,
+				middleware.ValidateUUID([]string{"id"}),
 			},
 		},
 		{
@@ -176,7 +101,7 @@ func AdminRoutes(
 			Path:    "/roles/:id",
 			Handler: roleHandler.UpdateRole,
 			Middlewares: []echo.MiddlewareFunc{
-				validateID,
+				middleware.ValidateUUID([]string{"id"}),
 			},
 		},
 		{
@@ -184,57 +109,7 @@ func AdminRoutes(
 			Path:    "/roles/:id",
 			Handler: roleHandler.DeleteRole,
 			Middlewares: []echo.MiddlewareFunc{
-				validateID,
-			},
-		},
-		{
-			Method:      http.MethodGet,
-			Path:        "/events",
-			Handler:     eventHandler.GetEvents,
-			Middlewares: []echo.MiddlewareFunc{},
-		},
-		{
-			Method:  http.MethodGet,
-			Path:    "/events/:id",
-			Handler: eventHandler.GetEventByID,
-			Middlewares: []echo.MiddlewareFunc{
-				validateID,
-			},
-		},
-		{
-			Method:      http.MethodPost,
-			Path:        "/events",
-			Handler:     eventHandler.CreateEvent,
-			Middlewares: []echo.MiddlewareFunc{},
-		},
-		{
-			Method:  http.MethodPatch,
-			Path:    "/events/:id",
-			Handler: eventHandler.UpdateEvent,
-			Middlewares: []echo.MiddlewareFunc{
-				validateID,
-			},
-		},
-		{
-			Method:      http.MethodGet,
-			Path:        "/event-approvals",
-			Handler:     eventApprovalHandler.GetEventApprovals,
-			Middlewares: []echo.MiddlewareFunc{},
-		},
-		{
-			Method:  http.MethodGet,
-			Path:    "/event-approvals/:id",
-			Handler: eventApprovalHandler.GetEventApprovalByID,
-			Middlewares: []echo.MiddlewareFunc{
-				validateID,
-			},
-		},
-		{
-			Method:  http.MethodPatch,
-			Path:    "/event-approvals/:id",
-			Handler: eventApprovalHandler.HandleEventApproval,
-			Middlewares: []echo.MiddlewareFunc{
-				validateID,
+				middleware.ValidateUUID([]string{"id"}),
 			},
 		},
 	}

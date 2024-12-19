@@ -9,6 +9,8 @@ import (
 	"github.com/sherwin-77/go-tix/internal/repository"
 	"github.com/sherwin-77/go-tix/internal/service"
 	"github.com/sherwin-77/go-tix/pkg/caches"
+	"github.com/sherwin-77/go-tix/pkg/constants"
+	"github.com/sherwin-77/go-tix/pkg/query"
 	"github.com/sherwin-77/go-tix/pkg/tokens"
 	"gorm.io/gorm"
 )
@@ -21,50 +23,33 @@ func BuildV1Routes(config *configs.Config, db *gorm.DB, cache caches.Cache, grou
 	authMiddleware := middlewares.NewAuthMiddleware(config, db)
 
 	// Initialize repositories
-	snapPaymentRepository := repository.NewSnapPaymentRepository(db)
 	userRepository := repository.NewUserRepository(db)
 	roleRepository := repository.NewRoleRepository(db)
-	eventRepository := repository.NewEventRepository(db)
-	eventApprovalRepository := repository.NewEventApprovalRepository(db)
-	ticketRepository := repository.NewTicketRepository(db)
-	saleInvoiceRepository := repository.NewSaleInvoiceRepository(db)
 
 	// Initialize builders
-	userBuilder := NewUserQueryBuilder()
-	eventBuilder := NewEventQueryBuilder()
-	eventApprovalBuilder := NewEventApprovalQueryBuilder()
-	saleInvoiceBuilder := NewSaleInvoiceQueryBuilder()
+	userBuilder := query.NewBuilder(
+		[]query.FilterParam{
+			{DisplayName: "Email", FieldName: "email", DisplayFilterType: constants.FilterResponsePartialText, FilterType: query.FilterTypePartial},
+			{DisplayName: "Name", FieldName: "name", InternalName: "username", DisplayFilterType: constants.FilterResponsePartialText, FilterType: query.FilterTypePartial},
+		},
+		[]query.SortParam{
+			{DisplayName: "Email", FieldName: "email", InternalName: "Email"},
+			{DisplayName: "Username", FieldName: "username", InternalName: "username"},
+		},
+		query.SortParam{DisplayName: "Email", FieldName: "email", InternalName: "email", Direction: query.SortDirectionAscending},
+	)
 
 	// Initialize services
 	tokenService := tokens.NewTokenService(config.JWTSecret)
-	midtransService := service.NewMidtransService(config.Midtrans)
-	transactionService := service.NewTransactionService(midtransService, snapPaymentRepository)
-
 	userService := service.NewUserService(tokenService, userRepository, roleRepository, userBuilder, cache)
 	roleService := service.NewRoleService(roleRepository, cache)
-	eventService := service.NewEventService(userRepository, eventRepository, eventApprovalRepository, eventBuilder, cache)
-	eventApprovalServices := service.NewEventApprovalService(eventService, eventApprovalRepository, eventApprovalBuilder)
-	saleInvoiceServices := service.NewSaleInvoiceService(saleInvoiceRepository, ticketRepository, transactionService, saleInvoiceBuilder)
-
-	webhookService := service.NewWebhookService(config.Midtrans, saleInvoiceRepository, snapPaymentRepository)
 
 	// Initialize handlers
 	userHandler := handler.NewUserHandler(userService)
 	roleHandler := handler.NewRoleHandler(roleService)
-	eventHandler := handler.NewEventHandler(eventService)
-	eventApprovalHandler := handler.NewEventApprovalHandler(eventApprovalServices)
-	saleInvoiceHandler := handler.NewSaleInvoiceHandler(saleInvoiceServices)
-
-	webhookHandler := handler.NewWebhookHandler(webhookService)
 
 	// Register routes
-	userRoutes, userMiddlewares := router.UserRoutes(
-		userHandler,
-		eventHandler,
-		saleInvoiceHandler,
-		authMiddleware,
-		middleware,
-	)
+	userRoutes, userMiddlewares := router.UserRoutes(userHandler, authMiddleware)
 	for _, route := range userRoutes {
 		m := append(userMiddlewares, route.Middlewares...)
 		g.Add(route.Method, route.Path, route.Handler, m...)
@@ -72,24 +57,9 @@ func BuildV1Routes(config *configs.Config, db *gorm.DB, cache caches.Cache, grou
 
 	adminGroup := g.Group("/admin")
 
-	adminRoutes, adminMiddlewares := router.AdminRoutes(
-		userHandler,
-		roleHandler,
-		eventHandler,
-		eventApprovalHandler,
-		middleware,
-		authMiddleware,
-	)
+	adminRoutes, adminMiddlewares := router.AdminRoutes(userHandler, roleHandler, middleware, authMiddleware)
 	for _, route := range adminRoutes {
 		m := append(adminMiddlewares, route.Middlewares...)
 		adminGroup.Add(route.Method, route.Path, route.Handler, m...)
-	}
-
-	webhookGroup := g.Group("/webhook")
-
-	webhookRoutes, webhookMiddlewares := router.WebhookRoutes(webhookHandler)
-	for _, route := range webhookRoutes {
-		m := append(webhookMiddlewares, route.Middlewares...)
-		webhookGroup.Add(route.Method, route.Path, route.Handler, m...)
 	}
 }
