@@ -8,5 +8,6 @@ type Ticket struct {
 	Category string    `json:"category" gorm:"type:varchar(100);not null"`
 	Price    float64   `json:"price" gorm:"type:decimal(12,2);not null"`
 
-	Event *Event `json:"event,omitempty" gorm:"foreignKey:EventID"`
+	Event            *Event             `json:"event,omitempty" gorm:"foreignKey:EventID"`
+	SaleInvoiceItems []*SaleInvoiceItem `json:"sale_invoice_items,omitempty" gorm:"polymorphicId:InvoiceableID;polymorphicType:InvoiceableType;polymorphicValue:tickets"`
 }

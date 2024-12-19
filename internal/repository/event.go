@@ -50,8 +50,7 @@ func (r *eventRepository) GetActiveEventsWithMinMaxPrice(ctx context.Context, tx
 
 	if err := tx.WithContext(ctx).
 		Where("status = ?", "active").
-		Where("start_at >= now()").
-		Where("end_at <= now()").
+		Where("end_at >= now()").
 		Find(&events).Error; err != nil {
 		return nil, err
 	}

@@ -22,7 +22,8 @@ CREATE TABLE sale_invoices (
     created_at TIMESTAMP(6) WITH TIME ZONE,
     updated_at TIMESTAMP(6) WITH TIME ZONE,
 
-    CONSTRAINT sale_invoices_user_id_fkey FOREIGN KEY (user_id) REFERENCES users (id)
+    CONSTRAINT sale_invoices_user_id_fkey FOREIGN KEY (user_id) REFERENCES users (id),
+    CONSTRAINT sale_invoices_number_key UNIQUE (number)
 );
 
 END;

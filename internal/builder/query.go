@@ -138,3 +138,25 @@ func NewEventApprovalQueryBuilder() query.Builder {
 		query.SortParam{DisplayName: "Created At", FieldName: "created_at", Direction: query.SortDirectionAscending},
 	)
 }
+
+func NewSaleInvoiceQueryBuilder() query.Builder {
+	return query.NewBuilder(
+		nil,
+		[]query.FilterParam{
+			{DisplayName: "Invoice Number", FieldName: "number", DisplayFilterType: constants.FilterResponsePartialText, FilterType: query.FilterTypePartial},
+			{DisplayName: "Status", FieldName: "status", DisplayFilterType: constants.FilterResponseSingleOption, FilterType: query.FilterTypeExact},
+		},
+		[]query.SortParam{
+			{DisplayName: "Invoice Number", FieldName: "number"},
+			{DisplayName: "Total", FieldName: "total"},
+			{DisplayName: "Transaction At", FieldName: "transaction_at"},
+			{DisplayName: "Due At", FieldName: "due_at"},
+			{DisplayName: "Completed At", FieldName: "completed_at"},
+			{DisplayName: "Canceled At", FieldName: "canceled_at"},
+			{DisplayName: "Expired At", FieldName: "expired_at"},
+			{DisplayName: "Rejected At", FieldName: "rejected_at"},
+			{DisplayName: "Refunded At", FieldName: "refunded_at"},
+		},
+		query.SortParam{DisplayName: "Created At", FieldName: "created_at", Direction: query.SortDirectionDescending},
+	)
+}

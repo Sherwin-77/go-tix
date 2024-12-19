@@ -722,6 +722,96 @@ const docTemplate = `{
                 }
             }
         },
+        "/bill": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[User] Sale Invoice"
+                ],
+                "summary": "Bill",
+                "parameters": [
+                    {
+                        "description": "Checkout Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.CheckoutRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.BillResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/checkout": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[User] Sale Invoice"
+                ],
+                "summary": "Checkout",
+                "parameters": [
+                    {
+                        "description": "Checkout Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.CheckoutRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.CheckoutResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/events": {
             "get": {
                 "consumes": [
@@ -970,6 +1060,80 @@ const docTemplate = `{
                 }
             }
         },
+        "/sale-invoices": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[User] Sale Invoice"
+                ],
+                "summary": "Get User Sale Invoices",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.SaleInvoiceListResponse"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/sale-invoices/{id}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[User] Sale Invoice"
+                ],
+                "summary": "Get User Sale Invoice By ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Sale Invoice ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.SaleInvoiceResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/users/role": {
             "patch": {
                 "consumes": [
@@ -1111,6 +1275,52 @@ const docTemplate = `{
                 }
             }
         },
+        "github_com_sherwin-77_go-tix_internal_http_dto.BillItemResponse": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "qty": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "number"
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.BillResponse": {
+            "type": "object",
+            "properties": {
+                "discount": {
+                    "type": "number"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.BillItemResponse"
+                    }
+                },
+                "payment_fee": {
+                    "type": "number"
+                },
+                "service_fee": {
+                    "type": "number"
+                },
+                "subtotal": {
+                    "type": "number"
+                },
+                "total": {
+                    "type": "number"
+                },
+                "vat": {
+                    "type": "number"
+                }
+            }
+        },
         "github_com_sherwin-77_go-tix_internal_http_dto.ChangeRoleRequest": {
             "type": "object",
             "required": [
@@ -1144,6 +1354,65 @@ const docTemplate = `{
                     ]
                 },
                 "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.CheckoutRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "full_name",
+                "items",
+                "phone_number"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "full_name": {
+                    "type": "string"
+                },
+                "identity_card_number": {
+                    "type": "string"
+                },
+                "items": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.CheckoutRequestItem"
+                    }
+                },
+                "phone_number": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.CheckoutRequestItem": {
+            "type": "object",
+            "required": [
+                "qty",
+                "ticket_id"
+            ],
+            "properties": {
+                "qty": {
+                    "description": "Notice hardcode limit, change if needed",
+                    "type": "integer",
+                    "maximum": 5,
+                    "minimum": 1
+                },
+                "ticket_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.CheckoutResponse": {
+            "type": "object",
+            "properties": {
+                "expired_at": {
+                    "type": "string"
+                },
+                "invoice_url": {
                     "type": "string"
                 }
             }
@@ -1386,6 +1655,134 @@ const docTemplate = `{
                 }
             }
         },
+        "github_com_sherwin-77_go-tix_internal_http_dto.SaleInvoiceItemResponse": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "qty": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "number"
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.SaleInvoiceListResponse": {
+            "type": "object",
+            "properties": {
+                "canceled_at": {
+                    "type": "string"
+                },
+                "completed_at": {
+                    "type": "string"
+                },
+                "due_at": {
+                    "type": "string"
+                },
+                "expired_at": {
+                    "type": "string"
+                },
+                "number": {
+                    "type": "string"
+                },
+                "refunded_at": {
+                    "type": "string"
+                },
+                "rejected_at": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "subtotal": {
+                    "type": "number"
+                },
+                "total": {
+                    "type": "number"
+                },
+                "transaction_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_sherwin-77_go-tix_internal_http_dto.SaleInvoiceResponse": {
+            "type": "object",
+            "properties": {
+                "canceled_at": {
+                    "type": "string"
+                },
+                "completed_at": {
+                    "type": "string"
+                },
+                "discount": {
+                    "type": "number"
+                },
+                "due_at": {
+                    "type": "string"
+                },
+                "expired_at": {
+                    "type": "string"
+                },
+                "number": {
+                    "type": "string"
+                },
+                "payment_fee": {
+                    "type": "number"
+                },
+                "refunded_at": {
+                    "type": "string"
+                },
+                "rejected_at": {
+                    "type": "string"
+                },
+                "sale_invoice_items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.SaleInvoiceItemResponse"
+                    }
+                },
+                "service_fee": {
+                    "type": "number"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "subtotal": {
+                    "type": "number"
+                },
+                "total": {
+                    "type": "number"
+                },
+                "transaction_at": {
+                    "type": "string"
+                },
+                "user_info": {
+                    "type": "object",
+                    "properties": {
+                        "email": {
+                            "type": "string"
+                        },
+                        "full_name": {
+                            "type": "string"
+                        },
+                        "identity_card_number": {
+                            "$ref": "#/definitions/null.String"
+                        },
+                        "phone_number": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "vat": {
+                    "type": "number"
+                }
+            }
+        },
         "github_com_sherwin-77_go-tix_internal_http_dto.TicketRequestItem": {
             "type": "object",
             "required": [
@@ -1405,6 +1802,9 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "category": {
+                    "type": "string"
+                },
+                "id": {
                     "type": "string"
                 },
                 "price": {
