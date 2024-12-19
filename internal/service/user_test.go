@@ -4,6 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"net/url"
+	"testing"
+
 	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 	"github.com/sherwin-77/go-tix/internal/entity"
@@ -18,8 +21,6 @@ import (
 	"go.uber.org/mock/gomock"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
-	"net/url"
-	"testing"
 )
 
 type UserTestSuite struct {

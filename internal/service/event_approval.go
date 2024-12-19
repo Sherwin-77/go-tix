@@ -128,7 +128,7 @@ func (s *eventApprovalService) GetUserEventApprovals(ctx context.Context, queryP
 	}
 
 	db, meta = s.eventApprovalBuilder.ApplyBuilder(db, queryParams, &entity.EventApproval{})
-	eventApprovals, err = s.eventApprovalRepository.GetEventApprovals(ctx, db)
+	eventApprovals, err = s.eventApprovalRepository.GetUserEventApprovals(ctx, db, ctx.Value("user_id").(string))
 	if err != nil {
 		return nil, nil, err
 	}
