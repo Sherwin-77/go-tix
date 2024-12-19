@@ -94,6 +94,20 @@ func (mr *MockBaseRepositoryMockRecorder) SingleTransaction() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SingleTransaction", reflect.TypeOf((*MockBaseRepository)(nil).SingleTransaction))
 }
 
+// WithPreloads mocks base method.
+func (m *MockBaseRepository) WithPreloads(tx *gorm.DB, preloads map[string][]any) *gorm.DB {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "WithPreloads", tx, preloads)
+	ret0, _ := ret[0].(*gorm.DB)
+	return ret0
+}
+
+// WithPreloads indicates an expected call of WithPreloads.
+func (mr *MockBaseRepositoryMockRecorder) WithPreloads(tx, preloads any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WithPreloads", reflect.TypeOf((*MockBaseRepository)(nil).WithPreloads), tx, preloads)
+}
+
 // WithTransaction mocks base method.
 func (m *MockBaseRepository) WithTransaction(fn func(*gorm.DB) error) error {
 	m.ctrl.T.Helper()

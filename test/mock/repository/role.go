@@ -188,6 +188,20 @@ func (mr *MockRoleRepositoryMockRecorder) UpdateRole(ctx, tx, role any) *gomock.
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateRole", reflect.TypeOf((*MockRoleRepository)(nil).UpdateRole), ctx, tx, role)
 }
 
+// WithPreloads mocks base method.
+func (m *MockRoleRepository) WithPreloads(tx *gorm.DB, preloads map[string][]any) *gorm.DB {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "WithPreloads", tx, preloads)
+	ret0, _ := ret[0].(*gorm.DB)
+	return ret0
+}
+
+// WithPreloads indicates an expected call of WithPreloads.
+func (mr *MockRoleRepositoryMockRecorder) WithPreloads(tx, preloads any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WithPreloads", reflect.TypeOf((*MockRoleRepository)(nil).WithPreloads), tx, preloads)
+}
+
 // WithTransaction mocks base method.
 func (m *MockRoleRepository) WithTransaction(fn func(*gorm.DB) error) error {
 	m.ctrl.T.Helper()
