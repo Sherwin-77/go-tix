@@ -62,6 +62,36 @@ definitions:
       updated_at:
         type: string
     type: object
+  github_com_sherwin-77_go-tix_internal_http_dto.BillItemResponse:
+    properties:
+      name:
+        type: string
+      price:
+        type: number
+      qty:
+        type: integer
+      total:
+        type: number
+    type: object
+  github_com_sherwin-77_go-tix_internal_http_dto.BillResponse:
+    properties:
+      discount:
+        type: number
+      items:
+        items:
+          $ref: '#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.BillItemResponse'
+        type: array
+      payment_fee:
+        type: number
+      service_fee:
+        type: number
+      subtotal:
+        type: number
+      total:
+        type: number
+      vat:
+        type: number
+    type: object
   github_com_sherwin-77_go-tix_internal_http_dto.ChangeRoleRequest:
     properties:
       items:
@@ -86,6 +116,47 @@ definitions:
     required:
     - action
     - id
+    type: object
+  github_com_sherwin-77_go-tix_internal_http_dto.CheckoutRequest:
+    properties:
+      email:
+        type: string
+      full_name:
+        type: string
+      identity_card_number:
+        type: string
+      items:
+        items:
+          $ref: '#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.CheckoutRequestItem'
+        minItems: 1
+        type: array
+      phone_number:
+        type: string
+    required:
+    - email
+    - full_name
+    - items
+    - phone_number
+    type: object
+  github_com_sherwin-77_go-tix_internal_http_dto.CheckoutRequestItem:
+    properties:
+      qty:
+        description: Notice hardcode limit, change if needed
+        maximum: 5
+        minimum: 1
+        type: integer
+      ticket_id:
+        type: string
+    required:
+    - qty
+    - ticket_id
+    type: object
+  github_com_sherwin-77_go-tix_internal_http_dto.CheckoutResponse:
+    properties:
+      expired_at:
+        type: string
+      invoice_url:
+        type: string
     type: object
   github_com_sherwin-77_go-tix_internal_http_dto.CreateEventRequest:
     properties:
@@ -246,6 +317,90 @@ definitions:
       name:
         type: string
     type: object
+  github_com_sherwin-77_go-tix_internal_http_dto.SaleInvoiceItemResponse:
+    properties:
+      name:
+        type: string
+      price:
+        type: number
+      qty:
+        type: integer
+      total:
+        type: number
+    type: object
+  github_com_sherwin-77_go-tix_internal_http_dto.SaleInvoiceListResponse:
+    properties:
+      canceled_at:
+        type: string
+      completed_at:
+        type: string
+      due_at:
+        type: string
+      expired_at:
+        type: string
+      number:
+        type: string
+      refunded_at:
+        type: string
+      rejected_at:
+        type: string
+      status:
+        type: string
+      subtotal:
+        type: number
+      total:
+        type: number
+      transaction_at:
+        type: string
+    type: object
+  github_com_sherwin-77_go-tix_internal_http_dto.SaleInvoiceResponse:
+    properties:
+      canceled_at:
+        type: string
+      completed_at:
+        type: string
+      discount:
+        type: number
+      due_at:
+        type: string
+      expired_at:
+        type: string
+      number:
+        type: string
+      payment_fee:
+        type: number
+      refunded_at:
+        type: string
+      rejected_at:
+        type: string
+      sale_invoice_items:
+        items:
+          $ref: '#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.SaleInvoiceItemResponse'
+        type: array
+      service_fee:
+        type: number
+      status:
+        type: string
+      subtotal:
+        type: number
+      total:
+        type: number
+      transaction_at:
+        type: string
+      user_info:
+        properties:
+          email:
+            type: string
+          full_name:
+            type: string
+          identity_card_number:
+            $ref: '#/definitions/null.String'
+          phone_number:
+            type: string
+        type: object
+      vat:
+        type: number
+    type: object
   github_com_sherwin-77_go-tix_internal_http_dto.TicketRequestItem:
     properties:
       category:
@@ -259,6 +414,8 @@ definitions:
   github_com_sherwin-77_go-tix_internal_http_dto.TicketResponse:
     properties:
       category:
+        type: string
+      id:
         type: string
       price:
         type: number
@@ -770,6 +927,58 @@ paths:
       summary: Update User
       tags:
       - '[Admin] User'
+  /bill:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Checkout Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.CheckoutRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.BillResponse'
+              type: object
+      summary: Bill
+      tags:
+      - '[User] Sale Invoice'
+  /checkout:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Checkout Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.CheckoutRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.CheckoutResponse'
+              type: object
+      summary: Checkout
+      tags:
+      - '[User] Sale Invoice'
   /events:
     get:
       consumes:
@@ -915,6 +1124,48 @@ paths:
       summary: Register Event
       tags:
       - '[User] Event'
+  /sale-invoices:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.SaleInvoiceListResponse'
+                  type: array
+              type: object
+      summary: Get User Sale Invoices
+      tags:
+      - '[User] Sale Invoice'
+  /sale-invoices/{id}:
+    get:
+      parameters:
+      - description: Sale Invoice ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.SaleInvoiceResponse'
+              type: object
+      summary: Get User Sale Invoice By ID
+      tags:
+      - '[User] Sale Invoice'
   /users/role:
     patch:
       consumes:

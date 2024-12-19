@@ -6,6 +6,7 @@ import (
 )
 
 type SaleInvoiceItemMetadata struct {
+	Name string `json:"name"`
 }
 
 type SaleInvoiceItem struct {

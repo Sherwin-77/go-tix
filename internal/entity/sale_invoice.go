@@ -38,4 +38,54 @@ type SaleInvoice struct {
 
 	User             *User              `json:"user,omitempty" gorm:"foreignKey:UserID"`
 	SaleInvoiceItems []*SaleInvoiceItem `json:"sale_invoice_items,omitempty" gorm:"foreignKey:SaleInvoiceID"`
+	SnapPayments     []*SnapPayment     `json:"snap_payments,omitempty" gorm:"foreignKey:SaleInvoiceID"`
+}
+
+func (s *SaleInvoice) BeforeCreate(tx *gorm.DB) error {
+	err := s.BaseEntity.BeforeCreate(tx)
+	if err != nil {
+		return err
+	}
+
+	if s.TransactionAt.IsZero() {
+		s.TransactionAt = null.TimeFrom(time.Now())
+	}
+
+	if s.DueAt.IsZero() {
+		// Default to 24 hours if not set
+		s.DueAt = null.TimeFrom(s.TransactionAt.ValueOrZero().Add(time.Hour * 24))
+	}
+
+	return nil
+}
+
+func (s *SaleInvoice) BeforeUpdate(tx *gorm.DB) error {
+	switch s.Status {
+	case string(enum.SaleInvoiceStatusCompleted):
+		if s.CompletedAt.IsZero() {
+			s.CompletedAt = null.TimeFrom(time.Now())
+		}
+
+	case string(enum.SaleInvoiceStatusCanceled):
+		if s.CanceledAt.IsZero() {
+			s.CanceledAt = null.TimeFrom(time.Now())
+		}
+
+	case string(enum.SaleInvoiceStatusExpired):
+		if s.ExpiredAt.IsZero() {
+			s.ExpiredAt = null.TimeFrom(time.Now())
+		}
+
+	case string(enum.SaleInvoiceStatusRejected):
+		if s.RejectedAt.IsZero() {
+			s.RejectedAt = null.TimeFrom(time.Now())
+		}
+
+	case string(enum.SaleInvoiceStatusRefunded):
+		if s.RefundedAt.IsZero() {
+			s.RefundedAt = null.TimeFrom(time.Now())
+		}
+	}
+
+	return nil
 }
