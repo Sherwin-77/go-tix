@@ -9,12 +9,12 @@ import (
 
 type EventApprovalRepository interface {
 	BaseRepository
-	GetEventApprovals(ctx context.Context) ([]entity.EventApproval, error)
-	GetEventApprovalByID(ctx context.Context, id string) (*entity.EventApproval, error)
-	HandleEventApproval(ctx context.Context, eventApproval *entity.EventApproval) error
-	CreateEventApproval(ctx context.Context, eventApproval *entity.EventApproval) error
-	UpdateEventApproval(ctx context.Context, eventApproval *entity.EventApproval) error
-	DeleteEventApproval(ctx context.Context, id string) error
+	GetEventApprovals(ctx context.Context, tx *gorm.DB) ([]entity.EventApproval, error)
+	GetUserEventApprovals(ctx context.Context, tx *gorm.DB, userID string) ([]entity.EventApproval, error)
+	GetEventApprovalByID(ctx context.Context, tx *gorm.DB, id string) (*entity.EventApproval, error)
+	CreateEventApproval(ctx context.Context, tx *gorm.DB, eventApproval *entity.EventApproval) error
+	UpdateEventApproval(ctx context.Context, tx *gorm.DB, eventApproval *entity.EventApproval) error
+	DeleteEventApproval(ctx context.Context, tx *gorm.DB, eventApproval *entity.EventApproval) error
 }
 
 type eventApprovalRepository struct {
@@ -22,42 +22,59 @@ type eventApprovalRepository struct {
 }
 
 func NewEventApprovalRepository(db *gorm.DB) EventApprovalRepository {
-	return &eventApprovalRepository{
-		baseRepository: baseRepository{
-			db: db,
-		},
-	}
+	return &eventApprovalRepository{baseRepository{db}}
 }
 
-// GetEventApprovals retrieves all event approvals
-func (r *eventApprovalRepository) GetEventApprovals(ctx context.Context) ([]entity.EventApproval, error) {
+func (r *eventApprovalRepository) GetEventApprovals(ctx context.Context, tx *gorm.DB) ([]entity.EventApproval, error) {
 	var eventApprovals []entity.EventApproval
-	return eventApprovals, r.db.WithContext(ctx).Find(&eventApprovals).Error
+
+	if err := tx.WithContext(ctx).Find(&eventApprovals).Error; err != nil {
+		return nil, err
+	}
+
+	return eventApprovals, nil
 }
 
-// GetEventApprovalByID retrieves an event approval by ID
-func (r *eventApprovalRepository) GetEventApprovalByID(ctx context.Context, id string) (*entity.EventApproval, error) {
-	var approval entity.EventApproval
-	return &approval, r.db.WithContext(ctx).First(&approval, "id = ?", id).Error
+func (r *eventApprovalRepository) GetUserEventApprovals(ctx context.Context, tx *gorm.DB, userID string) ([]entity.EventApproval, error) {
+	var eventApprovals []entity.EventApproval
 
+	if err := tx.WithContext(ctx).Where("user_id = ?", userID).Find(&eventApprovals).Error; err != nil {
+		return nil, err
+	}
+
+	return eventApprovals, nil
 }
 
-// HandleEventApproval updates the status of an event approval
-func (r *eventApprovalRepository) HandleEventApproval(ctx context.Context, eventApproval *entity.EventApproval) error {
-	return r.db.WithContext(ctx).Save(eventApproval).Error
+func (r *eventApprovalRepository) GetEventApprovalByID(ctx context.Context, tx *gorm.DB, id string) (*entity.EventApproval, error) {
+	var eventApproval entity.EventApproval
+
+	if err := tx.WithContext(ctx).Where("id = ?", id).First(&eventApproval).Error; err != nil {
+		return nil, err
+	}
+
+	return &eventApproval, nil
 }
 
-// CreateEventApproval membuat event approval baru
-func (r *eventApprovalRepository) CreateEventApproval(ctx context.Context, eventApproval *entity.EventApproval) error {
-	return r.db.WithContext(ctx).Create(eventApproval).Error
+func (r *eventApprovalRepository) CreateEventApproval(ctx context.Context, tx *gorm.DB, eventApproval *entity.EventApproval) error {
+	if err := tx.WithContext(ctx).Create(eventApproval).Error; err != nil {
+		return err
+	}
+
+	return nil
 }
 
-// UpdateEventApproval updates an event approval
-func (r *eventApprovalRepository) UpdateEventApproval(ctx context.Context, updatedEventApproval *entity.EventApproval) error {
-	return r.db.WithContext(ctx).Save(updatedEventApproval).Error
+func (r *eventApprovalRepository) UpdateEventApproval(ctx context.Context, tx *gorm.DB, eventApproval *entity.EventApproval) error {
+	if err := tx.WithContext(ctx).Save(eventApproval).Error; err != nil {
+		return err
+	}
+
+	return nil
 }
 
-// DeleteEventApproval deletes an event approval
-func (r *eventApprovalRepository) DeleteEventApproval(ctx context.Context, id string) error {
-	return r.db.WithContext(ctx).Delete(&entity.EventApproval{}, "id = ?", id).Error
+func (r *eventApprovalRepository) DeleteEventApproval(ctx context.Context, tx *gorm.DB, eventApproval *entity.EventApproval) error {
+	if err := tx.WithContext(ctx).Delete(eventApproval).Error; err != nil {
+		return err
+	}
+
+	return nil
 }

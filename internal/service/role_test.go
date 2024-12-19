@@ -4,10 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"testing"
+
 	"github.com/google/uuid"
 	"github.com/sherwin-77/go-tix/internal/entity"
 	"github.com/sherwin-77/go-tix/internal/http/dto"
-	"testing"
 
 	"github.com/sherwin-77/go-tix/internal/service"
 	mock_caches "github.com/sherwin-77/go-tix/test/mock/pkg/caches"

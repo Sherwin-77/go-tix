@@ -31,11 +31,11 @@ func NewUserHandler(userService service.UserService) UserHandler {
 //	@router		/admin/users [get]
 func (h *UserHandler) GetUsers(ctx echo.Context) error {
 	users, meta, err := h.userService.GetUsers(ctx.Request().Context(), ctx.QueryParams())
-	usersResponse := dto.NewUsersResponse(users)
-
 	if err != nil {
 		return err
 	}
+
+	usersResponse := dto.NewUsersResponse(users)
 
 	return ctx.JSON(http.StatusOK, response.NewResponse(http.StatusOK, "Success", usersResponse, meta))
 }

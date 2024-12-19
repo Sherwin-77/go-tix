@@ -9,11 +9,12 @@ import (
 
 type EventApprovalTicketRepository interface {
 	BaseRepository
-	GetEventApprovalsTickets(ctx context.Context) ([]entity.EventApproval, error)
-	GetEventApprovalsByEventIDTickets(ctx context.Context, id int64) ([]entity.EventApproval, error)
-	CreateEventApprovalTickets(ctx context.Context, eventApproval *entity.EventApproval) error
-	UpdateEventApprovalTickets(ctx context.Context, eventApproval *entity.EventApproval) error
-	DeleteEventApprovalTickets(ctx context.Context, id int64) error
+	GetEventApprovalTickets(ctx context.Context, tx *gorm.DB) ([]entity.EventApprovalTicket, error)
+	GetEventApprovalTicketsFiltered(ctx context.Context, tx *gorm.DB, limit int, offset int, order interface{}, query interface{}, args ...interface{}) ([]entity.EventApprovalTicket, error)
+	GetEventApprovalTicketByID(ctx context.Context, tx *gorm.DB, id string) (*entity.EventApprovalTicket, error)
+	CreateEventApprovalTicket(ctx context.Context, tx *gorm.DB, eventApprovalTicket *entity.EventApprovalTicket) error
+	UpdateEventApprovalTicket(ctx context.Context, tx *gorm.DB, eventApprovalTicket *entity.EventApprovalTicket) error
+	DeleteEventApprovalTicket(ctx context.Context, tx *gorm.DB, eventApprovalTicket *entity.EventApprovalTicket) error
 }
 
 type eventApprovalTicketRepository struct {
@@ -24,25 +25,56 @@ func NewEventApprovalTicketRepository(db *gorm.DB) EventApprovalTicketRepository
 	return &eventApprovalTicketRepository{baseRepository{db}}
 }
 
-func (r *eventApprovalTicketRepository) GetEventApprovalsTickets(ctx context.Context) ([]entity.EventApproval, error) {
-	var eventApprovals []entity.EventApproval
-	return eventApprovals, r.db.WithContext(ctx).Find(&eventApprovals).Error
+func (r *eventApprovalTicketRepository) GetEventApprovalTickets(ctx context.Context, tx *gorm.DB) ([]entity.EventApprovalTicket, error) {
+	var eventApprovalTickets []entity.EventApprovalTicket
+
+	if err := tx.WithContext(ctx).Find(&eventApprovalTickets).Error; err != nil {
+		return nil, err
+	}
+
+	return eventApprovalTickets, nil
 }
 
-func (r *eventApprovalTicketRepository) GetEventApprovalsByEventIDTickets(ctx context.Context, id int64) ([]entity.EventApproval, error) {
-	var eventApprovals []entity.EventApproval
-	return eventApprovals, r.db.WithContext(ctx).Where("event_id = ?", id).Find(&eventApprovals).Error
+func (r *eventApprovalTicketRepository) GetEventApprovalTicketsFiltered(ctx context.Context, tx *gorm.DB, limit int, offset int, order interface{}, query interface{}, args ...interface{}) ([]entity.EventApprovalTicket, error) {
+	var eventApprovalTickets []entity.EventApprovalTicket
+
+	if err := tx.WithContext(ctx).Where(query, args...).Limit(limit).Offset(offset).Order(order).Find(&eventApprovalTickets).Error; err != nil {
+		return nil, err
+	}
+
+	return eventApprovalTickets, nil
 }
 
-func (r *eventApprovalTicketRepository) CreateEventApprovalTickets(ctx context.Context, eventApproval *entity.EventApproval) error {
-	return r.db.WithContext(ctx).Create(eventApproval).Error
+func (r *eventApprovalTicketRepository) GetEventApprovalTicketByID(ctx context.Context, tx *gorm.DB, id string) (*entity.EventApprovalTicket, error) {
+	var eventApprovalTicket entity.EventApprovalTicket
 
+	if err := tx.WithContext(ctx).Where("id = ?", id).First(&eventApprovalTicket).Error; err != nil {
+		return nil, err
+	}
+
+	return &eventApprovalTicket, nil
 }
 
-func (r *eventApprovalTicketRepository) UpdateEventApprovalTickets(ctx context.Context, eventApproval *entity.EventApproval) error {
-	return r.db.WithContext(ctx).Save(eventApproval).Error
+func (r *eventApprovalTicketRepository) CreateEventApprovalTicket(ctx context.Context, tx *gorm.DB, eventApprovalTicket *entity.EventApprovalTicket) error {
+	if err := tx.WithContext(ctx).Create(eventApprovalTicket).Error; err != nil {
+		return err
+	}
+
+	return nil
 }
 
-func (r *eventApprovalTicketRepository) DeleteEventApprovalTickets(ctx context.Context, id int64) error {
-	return r.db.WithContext(ctx).Delete(&entity.EventApproval{}, id).Error
+func (r *eventApprovalTicketRepository) UpdateEventApprovalTicket(ctx context.Context, tx *gorm.DB, eventApprovalTicket *entity.EventApprovalTicket) error {
+	if err := tx.WithContext(ctx).Save(eventApprovalTicket).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *eventApprovalTicketRepository) DeleteEventApprovalTicket(ctx context.Context, tx *gorm.DB, eventApprovalTicket *entity.EventApprovalTicket) error {
+	if err := tx.WithContext(ctx).Delete(eventApprovalTicket).Error; err != nil {
+		return err
+	}
+
+	return nil
 }
