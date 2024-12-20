@@ -184,16 +184,24 @@ func (s *saleInvoiceService) Checkout(ctx context.Context, request dto.CheckoutR
 		}
 
 		for _, item := range invoicePricing.InvoiceItems {
-			saleInvoice.SaleInvoiceItems = append(saleInvoice.SaleInvoiceItems, &entity.SaleInvoiceItem{
+			invoiceItem := &entity.SaleInvoiceItem{
 				InvoiceableID:   item.ID,
 				InvoiceableType: "tickets",
 				Price:           item.Price,
 				Qty:             item.Qty,
 				Total:           item.Total,
-				Metadata: datatypes.NewJSONType(entity.SaleInvoiceItemMetadata{
-					Name: item.Name,
-				}),
-			})
+			}
+			metadata := entity.SaleInvoiceItemMetadata{
+				Name:  item.Name,
+				Codes: []string{},
+			}
+
+			for i := 0; i < item.Qty; i++ {
+				metadata.Codes = append(metadata.Codes, uuid.New().String())
+			}
+
+			invoiceItem.Metadata = datatypes.NewJSONType(metadata)
+			saleInvoice.SaleInvoiceItems = append(saleInvoice.SaleInvoiceItems, invoiceItem)
 		}
 
 		err = s.saleInvoiceRepository.CreateSaleInvoice(ctx, tx, saleInvoice)

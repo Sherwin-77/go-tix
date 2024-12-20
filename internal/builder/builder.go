@@ -38,6 +38,7 @@ func BuildV1Routes(config *configs.Config, db *gorm.DB, cache caches.Cache, grou
 	// Initialize services
 	tokenService := tokens.NewTokenService(config.JWTSecret)
 	midtransService := service.NewMidtransService(config.Midtrans)
+	mailService := service.NewMailService(config.Mail)
 	transactionService := service.NewTransactionService(midtransService, snapPaymentRepository)
 
 	userService := service.NewUserService(tokenService, userRepository, roleRepository, userBuilder, cache)
@@ -46,7 +47,7 @@ func BuildV1Routes(config *configs.Config, db *gorm.DB, cache caches.Cache, grou
 	eventApprovalServices := service.NewEventApprovalService(eventService, eventApprovalRepository, eventApprovalBuilder)
 	saleInvoiceServices := service.NewSaleInvoiceService(saleInvoiceRepository, ticketRepository, transactionService, saleInvoiceBuilder)
 
-	webhookService := service.NewWebhookService(config.Midtrans, saleInvoiceRepository, snapPaymentRepository)
+	webhookService := service.NewWebhookService(config.Midtrans, saleInvoiceRepository, snapPaymentRepository, mailService)
 
 	// Initialize handlers
 	userHandler := handler.NewUserHandler(userService)

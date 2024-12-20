@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Invoice</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Invoice #{{.Number}}</h1>
+<p>Hello {{.Customer}}, your payment has been confirmed</p>
+<table>
+    <tr>
+        <th style="background-color: greenyellow">Number</th>
+        <td>{{.Number}}</td>
+    </tr>
+    <tr>
+        <th style="background-color: greenyellow">Date</th>
+        <td>{{.Date}}</td>
+    </tr>
+    <tr>
+        <th style="background-color: greenyellow">Customer</th>
+        <td>{{.Customer}}</td>
+    </tr>
+    <tr>
+        <th style="background-color: greenyellow">Total</th>
+        <td>{{.Total}}</td>
+    </tr>
+</table>
+<h2>Tickets</h2>
+<table>
+    <tr>
+        <th style="border-left: 1px solid black; border-right: none">Ticket Name</th>
+        <th style="border-left: none; border-right: 1px solid black">Code</th>
+    </tr>
+    {{range .Items}}
+    <tr>
+        <td style="border-left: 1px solid black; border-right: none">{{.Name}}</td>
+        <td style="border-left: none; border-right: 1px solid black">{{.Code}}</td>
+    </tr>
+    {{end}}
+</table>
+</body>
+</html>

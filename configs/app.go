@@ -16,6 +16,7 @@ type Config struct {
 	Postgres  PostgresConfig
 	Redis     RedisConfig
 	Midtrans  MidtransConfig
+	Mail      MailConfig
 }
 
 type PostgresConfig struct {
@@ -37,6 +38,14 @@ type MidtransConfig struct {
 	ServerKey string
 	ClientKey string
 	Env       string
+}
+
+type MailConfig struct {
+	Host        string
+	Port        string
+	Username    string
+	Password    string
+	FromAddress string
 }
 
 func GetConfig() *Config {
@@ -63,6 +72,13 @@ func GetConfig() *Config {
 			ServerKey: os.Getenv("MIDTRANS_SERVER_KEY"),
 			ClientKey: os.Getenv("MIDTRANS_CLIENT_KEY"),
 			Env:       os.Getenv("MIDTRANS_ENV"),
+		},
+		Mail: MailConfig{
+			Host:        os.Getenv("MAIL_HOST"),
+			Port:        os.Getenv("MAIL_PORT"),
+			Username:    os.Getenv("MAIL_USERNAME"),
+			Password:    os.Getenv("MAIL_PASSWORD"),
+			FromAddress: os.Getenv("MAIL_FROM_ADDRESS"),
 		},
 	}
 

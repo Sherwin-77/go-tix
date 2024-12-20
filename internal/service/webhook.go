@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"github.com/labstack/echo/v4"
 	"github.com/sherwin-77/go-tix/configs"
 	"github.com/sherwin-77/go-tix/internal/enum"
@@ -19,17 +20,20 @@ type webhookService struct {
 	midtransConfig        configs.MidtransConfig
 	saleInvoiceRepository repository.SaleInvoiceRepository
 	snapPaymentRepository repository.SnapPaymentRepository
+	mailService           MailService
 }
 
 func NewWebhookService(
 	midtransConfig configs.MidtransConfig,
 	saleInvoiceRepository repository.SaleInvoiceRepository,
 	snapPaymentRepository repository.SnapPaymentRepository,
+	mailService MailService,
 ) WebhookService {
 	return &webhookService{
 		midtransConfig,
 		saleInvoiceRepository,
 		snapPaymentRepository,
+		mailService,
 	}
 }
 
@@ -48,7 +52,8 @@ func (s *webhookService) HandleMidtransNotification(ctx context.Context, payload
 			return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 		}
 
-		saleInvoice, err := s.saleInvoiceRepository.GetSaleInvoiceByID(ctx, tx, snapPayment.SaleInvoiceID.String())
+		sl := s.saleInvoiceRepository.WithPreloads(tx, map[string][]interface{}{"SaleInvoiceItems": nil})
+		saleInvoice, err := s.saleInvoiceRepository.GetSaleInvoiceByID(ctx, sl, snapPayment.SaleInvoiceID.String())
 		if err != nil {
 			return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 		}
@@ -91,6 +96,17 @@ func (s *webhookService) HandleMidtransNotification(ctx context.Context, payload
 		err = s.saleInvoiceRepository.UpdateSaleInvoice(ctx, tx, saleInvoice)
 		if err != nil {
 			return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+		}
+
+		if saleInvoice.Status == string(enum.SaleInvoiceStatusCompleted) {
+			metadata := saleInvoice.Metadata.Data()
+			err = s.mailService.SendTicket(metadata.Email, saleInvoice)
+			if err != nil {
+				return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+			}
+		} else {
+			fmt.Println(transactionStatusResp.TransactionStatus)
+			fmt.Println(saleInvoice.Status)
 		}
 
 		return nil
