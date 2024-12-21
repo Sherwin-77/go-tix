@@ -231,6 +231,20 @@ func (mr *MockUserRepositoryMockRecorder) UpdateUser(ctx, tx, user any) *gomock.
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateUser", reflect.TypeOf((*MockUserRepository)(nil).UpdateUser), ctx, tx, user)
 }
 
+// WithPreloads mocks base method.
+func (m *MockUserRepository) WithPreloads(tx *gorm.DB, preloads map[string][]any) *gorm.DB {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "WithPreloads", tx, preloads)
+	ret0, _ := ret[0].(*gorm.DB)
+	return ret0
+}
+
+// WithPreloads indicates an expected call of WithPreloads.
+func (mr *MockUserRepositoryMockRecorder) WithPreloads(tx, preloads any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WithPreloads", reflect.TypeOf((*MockUserRepository)(nil).WithPreloads), tx, preloads)
+}
+
 // WithTransaction mocks base method.
 func (m *MockUserRepository) WithTransaction(fn func(*gorm.DB) error) error {
 	m.ctrl.T.Helper()
