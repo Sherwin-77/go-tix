@@ -12,6 +12,7 @@ import (
 func UserRoutes(
 	userHandler handler.UserHandler,
 	eventHandler handler.EventHandler,
+	eventApprovalHandler handler.EventApprovalHandler,
 	saleInvoiceHandler handler.SaleInvoiceHandler,
 	authMiddleware middlewares.AuthMiddleware,
 	middleware middlewares.Middleware,
@@ -62,6 +63,23 @@ func UserRoutes(
 			Handler: eventHandler.RegisterEvent,
 			Middlewares: []echo.MiddlewareFunc{
 				authMiddleware.Authenticated,
+			},
+		},
+		{
+			Method:  http.MethodGet,
+			Path:    "/events-approvals",
+			Handler: eventApprovalHandler.GetUserEventApprovals,
+			Middlewares: []echo.MiddlewareFunc{
+				authMiddleware.Authenticated,
+			},
+		},
+		{
+			Method:  http.MethodGet,
+			Path:    "/events-approvals/:id",
+			Handler: eventApprovalHandler.GetUserEventApprovalByID,
+			Middlewares: []echo.MiddlewareFunc{
+				authMiddleware.Authenticated,
+				validateID,
 			},
 		},
 		{

@@ -59,21 +59,6 @@ func (mr *MockEventApprovalServiceMockRecorder) GetEventApprovalByID(ctx, id any
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEventApprovalByID", reflect.TypeOf((*MockEventApprovalService)(nil).GetEventApprovalByID), ctx, id)
 }
 
-// GetEventApprovalForUserByID mocks base method.
-func (m *MockEventApprovalService) GetEventApprovalForUserByID(ctx context.Context, id string) (*entity.EventApproval, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetEventApprovalForUserByID", ctx, id)
-	ret0, _ := ret[0].(*entity.EventApproval)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetEventApprovalForUserByID indicates an expected call of GetEventApprovalForUserByID.
-func (mr *MockEventApprovalServiceMockRecorder) GetEventApprovalForUserByID(ctx, id any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEventApprovalForUserByID", reflect.TypeOf((*MockEventApprovalService)(nil).GetEventApprovalForUserByID), ctx, id)
-}
-
 // GetEventApprovals mocks base method.
 func (m *MockEventApprovalService) GetEventApprovals(ctx context.Context, queryParams url.Values) ([]entity.EventApproval, *response.Meta, error) {
 	m.ctrl.T.Helper()
@@ -90,10 +75,25 @@ func (mr *MockEventApprovalServiceMockRecorder) GetEventApprovals(ctx, queryPara
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEventApprovals", reflect.TypeOf((*MockEventApprovalService)(nil).GetEventApprovals), ctx, queryParams)
 }
 
-// GetUserEventApprovals mocks base method.
-func (m *MockEventApprovalService) GetUserEventApprovals(ctx context.Context, queryParams url.Values) ([]entity.EventApproval, *response.Meta, error) {
+// GetUserEventApprovalByID mocks base method.
+func (m *MockEventApprovalService) GetUserEventApprovalByID(ctx context.Context, id, userID string) (*entity.EventApproval, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetUserEventApprovals", ctx, queryParams)
+	ret := m.ctrl.Call(m, "GetUserEventApprovalByID", ctx, id, userID)
+	ret0, _ := ret[0].(*entity.EventApproval)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserEventApprovalByID indicates an expected call of GetUserEventApprovalByID.
+func (mr *MockEventApprovalServiceMockRecorder) GetUserEventApprovalByID(ctx, id, userID any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserEventApprovalByID", reflect.TypeOf((*MockEventApprovalService)(nil).GetUserEventApprovalByID), ctx, id, userID)
+}
+
+// GetUserEventApprovals mocks base method.
+func (m *MockEventApprovalService) GetUserEventApprovals(ctx context.Context, queryParams url.Values, userID string) ([]entity.EventApproval, *response.Meta, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUserEventApprovals", ctx, queryParams, userID)
 	ret0, _ := ret[0].([]entity.EventApproval)
 	ret1, _ := ret[1].(*response.Meta)
 	ret2, _ := ret[2].(error)
@@ -101,9 +101,9 @@ func (m *MockEventApprovalService) GetUserEventApprovals(ctx context.Context, qu
 }
 
 // GetUserEventApprovals indicates an expected call of GetUserEventApprovals.
-func (mr *MockEventApprovalServiceMockRecorder) GetUserEventApprovals(ctx, queryParams any) *gomock.Call {
+func (mr *MockEventApprovalServiceMockRecorder) GetUserEventApprovals(ctx, queryParams, userID any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserEventApprovals", reflect.TypeOf((*MockEventApprovalService)(nil).GetUserEventApprovals), ctx, queryParams)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserEventApprovals", reflect.TypeOf((*MockEventApprovalService)(nil).GetUserEventApprovals), ctx, queryParams, userID)
 }
 
 // HandleEventApproval mocks base method.

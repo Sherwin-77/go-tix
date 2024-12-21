@@ -979,6 +979,52 @@ paths:
       summary: Checkout
       tags:
       - '[User] Sale Invoice'
+  /event-approvals:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.EventApprovalResponse'
+                  type: array
+              type: object
+      summary: Get User Event Approvals
+      tags:
+      - '[User] Event Approval'
+  /event-approvals/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: The Event Approval ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_sherwin-77_go-tix_pkg_response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_sherwin-77_go-tix_internal_http_dto.EventApprovalResponse'
+              type: object
+      summary: Get User Event Approval By ID
+      tags:
+      - '[User] Event Approval'
   /events:
     get:
       consumes:

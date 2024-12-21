@@ -54,7 +54,7 @@ func NewEventApprovalResponse(eventApproval *entity.EventApproval) EventApproval
 }
 
 func NewEventApprovalsResponse(eventApprovals []entity.EventApproval) []EventApprovalResponse {
-	var res []EventApprovalResponse
+	res := make([]EventApprovalResponse, 0)
 	for _, eventApproval := range eventApprovals {
 		res = append(res, NewEventApprovalResponse(&eventApproval))
 	}

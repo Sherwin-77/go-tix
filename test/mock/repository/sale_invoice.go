@@ -128,6 +128,21 @@ func (mr *MockSaleInvoiceRepositoryMockRecorder) GetSaleInvoices(ctx, tx any) *g
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSaleInvoices", reflect.TypeOf((*MockSaleInvoiceRepository)(nil).GetSaleInvoices), ctx, tx)
 }
 
+// GetUserSaleInvoices mocks base method.
+func (m *MockSaleInvoiceRepository) GetUserSaleInvoices(ctx context.Context, tx *gorm.DB, userID string) ([]entity.SaleInvoice, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUserSaleInvoices", ctx, tx, userID)
+	ret0, _ := ret[0].([]entity.SaleInvoice)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserSaleInvoices indicates an expected call of GetUserSaleInvoices.
+func (mr *MockSaleInvoiceRepositoryMockRecorder) GetUserSaleInvoices(ctx, tx, userID any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserSaleInvoices", reflect.TypeOf((*MockSaleInvoiceRepository)(nil).GetUserSaleInvoices), ctx, tx, userID)
+}
+
 // Rollback mocks base method.
 func (m *MockSaleInvoiceRepository) Rollback(tx *gorm.DB) {
 	m.ctrl.T.Helper()
@@ -138,6 +153,21 @@ func (m *MockSaleInvoiceRepository) Rollback(tx *gorm.DB) {
 func (mr *MockSaleInvoiceRepositoryMockRecorder) Rollback(tx any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Rollback", reflect.TypeOf((*MockSaleInvoiceRepository)(nil).Rollback), tx)
+}
+
+// SaleInvoiceNumberExists mocks base method.
+func (m *MockSaleInvoiceRepository) SaleInvoiceNumberExists(ctx context.Context, tx *gorm.DB, number string) (bool, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SaleInvoiceNumberExists", ctx, tx, number)
+	ret0, _ := ret[0].(bool)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SaleInvoiceNumberExists indicates an expected call of SaleInvoiceNumberExists.
+func (mr *MockSaleInvoiceRepositoryMockRecorder) SaleInvoiceNumberExists(ctx, tx, number any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SaleInvoiceNumberExists", reflect.TypeOf((*MockSaleInvoiceRepository)(nil).SaleInvoiceNumberExists), ctx, tx, number)
 }
 
 // SingleTransaction mocks base method.

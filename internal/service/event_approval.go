@@ -19,8 +19,8 @@ type EventApprovalService interface {
 	GetEventApprovals(ctx context.Context, queryParams url.Values) ([]entity.EventApproval, *response.Meta, error)
 	GetEventApprovalByID(ctx context.Context, id string) (*entity.EventApproval, error)
 	HandleEventApproval(ctx context.Context, request dto.HandleEventApprovalRequest) error
-	GetUserEventApprovals(ctx context.Context, queryParams url.Values) ([]entity.EventApproval, *response.Meta, error)
-	GetEventApprovalForUserByID(ctx context.Context, id string) (*entity.EventApproval, error)
+	GetUserEventApprovals(ctx context.Context, queryParams url.Values, userID string) ([]entity.EventApproval, *response.Meta, error)
+	GetUserEventApprovalByID(ctx context.Context, id string, userID string) (*entity.EventApproval, error)
 }
 
 type eventApprovalService struct {
@@ -115,7 +115,7 @@ func (s *eventApprovalService) HandleEventApproval(ctx context.Context, request 
 /*                                User Service                                */
 /* -------------------------------------------------------------------------- */
 
-func (s *eventApprovalService) GetUserEventApprovals(ctx context.Context, queryParams url.Values) ([]entity.EventApproval, *response.Meta, error) {
+func (s *eventApprovalService) GetUserEventApprovals(ctx context.Context, queryParams url.Values, userID string) ([]entity.EventApproval, *response.Meta, error) {
 	var eventApprovals []entity.EventApproval
 	var err error
 	var meta *response.Meta
@@ -128,7 +128,7 @@ func (s *eventApprovalService) GetUserEventApprovals(ctx context.Context, queryP
 	}
 
 	db, meta = s.eventApprovalBuilder.ApplyBuilder(db, queryParams, &entity.EventApproval{})
-	eventApprovals, err = s.eventApprovalRepository.GetUserEventApprovals(ctx, db, ctx.Value("user_id").(string))
+	eventApprovals, err = s.eventApprovalRepository.GetUserEventApprovals(ctx, db, userID)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -136,48 +136,15 @@ func (s *eventApprovalService) GetUserEventApprovals(ctx context.Context, queryP
 	return eventApprovals, meta, nil
 }
 
-func (s *eventApprovalService) GetEventApprovalForUserByID(ctx context.Context, id string) (*entity.EventApproval, error) {
-	db := s.eventApprovalRepository.SingleTransaction()
-	db = s.eventApprovalRepository.WithPreloads(db, map[string][]interface{}{"EventApprovalTickets": nil})
-
-	eventApproval, err := s.eventApprovalRepository.GetEventApprovalByID(ctx, db, id)
+func (s *eventApprovalService) GetUserEventApprovalByID(ctx context.Context, id string, userID string) (*entity.EventApproval, error) {
+	eventApproval, err := s.GetEventApprovalByID(ctx, id)
 	if err != nil {
+		return nil, err
+	}
+
+	if eventApproval.UserID.String() != userID {
 		return nil, echo.NewHTTPError(http.StatusNotFound, "Event approval not found")
 	}
 
 	return eventApproval, nil
-}
-
-// HandleEventApprovalForUser creates an event approval for a user with the given validation on admin.
-func (s *eventApprovalService) HandleEventApprovalForUser(ctx context.Context, request dto.HandleEventApprovalRequest) error {
-	return s.eventApprovalRepository.WithTransaction(func(tx *gorm.DB) error {
-		db := s.eventApprovalRepository.WithPreloads(tx, map[string][]interface{}{"EventApprovalTickets": nil})
-
-		eventApproval, err := s.eventApprovalRepository.GetEventApprovalByID(ctx, db, request.ID)
-		if err != nil {
-			return echo.NewHTTPError(http.StatusNotFound, "Event approval not found")
-		}
-
-		if eventApproval.Status != string(enum.EventApprovalStatusPending) {
-			return echo.NewHTTPError(http.StatusBadRequest, "Event approval is not pending")
-		}
-
-		if request.Action == "approve" {
-			eventApproval.Status = string(enum.EventApprovalStatusApproved)
-
-			if err = s.eventService.CreateEventFromEventApproval(ctx, eventApproval); err != nil {
-				return err
-			}
-		} else if request.Action == "reject" {
-			eventApproval.Status = string(enum.EventApprovalStatusRejected)
-		} else {
-			return echo.NewHTTPError(http.StatusBadRequest, "Invalid action")
-		}
-
-		if err = s.eventApprovalRepository.UpdateEventApproval(ctx, tx, eventApproval); err != nil {
-			return err
-		}
-
-		return nil
-	})
 }

@@ -62,6 +62,7 @@ func BuildV1Routes(config *configs.Config, db *gorm.DB, cache caches.Cache, grou
 	userRoutes, userMiddlewares := router.UserRoutes(
 		userHandler,
 		eventHandler,
+		eventApprovalHandler,
 		saleInvoiceHandler,
 		authMiddleware,
 		middleware,

@@ -96,3 +96,49 @@ func (e *EventApprovalHandler) HandleEventApproval(ctx echo.Context) error {
 /* -------------------------------------------------------------------------- */
 /*                                User Handler                                */
 /* -------------------------------------------------------------------------- */
+
+// GetUserEventApprovals
+//
+//	@Summary	Get User Event Approvals
+//	@Tags		[User] Event Approval
+//	@Accept		json
+//	@Produce	json
+//	@Success	200	{object}	response.Response{data=[]dto.EventApprovalResponse}
+//	@Router		/event-approvals [get]
+func (e *EventApprovalHandler) GetUserEventApprovals(ctx echo.Context) error {
+	userID := ctx.Get("user_id").(string)
+	eventApprovals, meta, err := e.eventApprovalService.GetUserEventApprovals(ctx.Request().Context(), ctx.QueryParams(), userID)
+
+	if err != nil {
+		return err
+	}
+
+	eventApprovalResponse := dto.NewEventApprovalsResponse(eventApprovals)
+
+	return ctx.JSON(http.StatusOK, response.NewResponse(http.StatusOK, "Success", eventApprovalResponse, meta))
+}
+
+// GetUserEventApprovalByID
+//
+//	@Summary	Get User Event Approval By ID
+//	@Tags		[User] Event Approval
+//	@Accept		json
+//	@Produce	json
+//	@Param		id	path		string	true	"The Event Approval ID"
+//	@Success	200	{object}	response.Response{data=dto.EventApprovalResponse}
+//	@Router		/event-approvals/{id} [get]
+func (e *EventApprovalHandler) GetUserEventApprovalByID(ctx echo.Context) error {
+	eventApprovalID := ctx.Param("id")
+	if eventApprovalID == "" {
+		return echo.NewHTTPError(http.StatusNotFound, http.StatusText(http.StatusNotFound))
+	}
+
+	eventApproval, err := e.eventApprovalService.GetUserEventApprovalByID(ctx.Request().Context(), eventApprovalID, ctx.Get("user_id").(string))
+	if err != nil {
+		return err
+	}
+
+	eventApprovalResponse := dto.NewEventApprovalResponse(eventApproval)
+
+	return ctx.JSON(http.StatusOK, response.NewResponse(http.StatusOK, "Success", eventApprovalResponse, nil))
+}
