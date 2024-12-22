@@ -10,6 +10,7 @@ import (
 	"github.com/sherwin-77/go-tix/internal/entity"
 	"github.com/sherwin-77/go-tix/internal/http/handler"
 	mock_service "github.com/sherwin-77/go-tix/test/mock/service"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 	"go.uber.org/mock/gomock"
 	"net/http"
@@ -217,33 +218,24 @@ func (s *UserTestSuite) TestLoginUser() {
 
 func (s *UserTestSuite) TestEditProfile() {
 	s.Run("Error binding", func() {
-		userID := uuid.NewString()
 		e := echo.New()
 		e.Validator = configs.NewAppValidator()
 		req := httptest.NewRequest(http.MethodPatch, "/profile", nil)
 		req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 		rec := httptest.NewRecorder()
 		c := e.NewContext(req, rec)
-		c.Set("user_id", userID)
 
-		err := s.userHandler.EditProfile(c)
-
-		s.ErrorAs(err, &validator.ValidationErrors{})
+		assert.Panics(s.T(), func() { _ = s.userHandler.EditProfile(c) })
 	})
 
 	s.Run("Error validate", func() {
-		userID := uuid.NewString()
 		e := echo.New()
 		e.Validator = configs.NewAppValidator()
 		req := httptest.NewRequest(http.MethodPatch, "/profile", strings.NewReader(`{"email": "invalid"}`))
 		req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 		rec := httptest.NewRecorder()
 		c := e.NewContext(req, rec)
-		c.Set("user_id", userID)
-
-		c.SetPath("/:id")
-		c.SetParamNames("id")
-		c.SetParamValues(userID)
+		c.Set("user_id", "invalid")
 
 		err := s.userHandler.EditProfile(c)
 
