@@ -33,7 +33,7 @@ func UserRoutes(
 			Middlewares: []echo.MiddlewareFunc{},
 		},
 		{
-			Method:  http.MethodPut,
+			Method:  http.MethodPatch,
 			Path:    "/profile",
 			Handler: userHandler.EditProfile,
 			Middlewares: []echo.MiddlewareFunc{

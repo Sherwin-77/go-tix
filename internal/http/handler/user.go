@@ -235,13 +235,15 @@ func (h *UserHandler) Login(ctx echo.Context) error {
 //	@Router		/profile [patch]
 func (h *UserHandler) EditProfile(ctx echo.Context) error {
 	userID := ctx.Get("user_id").(string)
+	// Inject user_id
+	ctx.SetParamNames("id")
+	ctx.SetParamValues(userID)
+
 	var req dto.UpdateUserRequest
 
 	if err := ctx.Bind(&req); err != nil {
 		return err
 	}
-
-	req.ID = userID
 
 	if err := ctx.Validate(req); err != nil {
 		return err
