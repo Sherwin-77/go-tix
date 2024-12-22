@@ -45,7 +45,7 @@ func BuildV1Routes(config *configs.Config, db *gorm.DB, cache caches.Cache, grou
 	roleService := service.NewRoleService(roleRepository, cache)
 	eventService := service.NewEventService(userRepository, eventRepository, eventApprovalRepository, eventBuilder, cache)
 	eventApprovalServices := service.NewEventApprovalService(eventService, eventApprovalRepository, eventApprovalBuilder)
-	saleInvoiceServices := service.NewSaleInvoiceService(saleInvoiceRepository, ticketRepository, transactionService, saleInvoiceBuilder)
+	saleInvoiceServices := service.NewSaleInvoiceService(saleInvoiceRepository, ticketRepository, transactionService, mailService, saleInvoiceBuilder)
 
 	webhookService := service.NewWebhookService(config.Midtrans, saleInvoiceRepository, snapPaymentRepository, mailService)
 

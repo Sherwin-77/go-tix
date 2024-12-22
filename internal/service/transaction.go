@@ -13,6 +13,7 @@ import (
 )
 
 type TransactionService interface {
+	GenerateOrderID() string
 	CreateTransaction(ctx context.Context, tx *gorm.DB, saleInvoice *entity.SaleInvoice) (*entity.SnapPayment, error)
 }
 
@@ -30,7 +31,7 @@ func NewTransactionService(midtransService MidtransService, snapPaymentRepositor
 	}
 }
 
-func (s *transactionService) generateOrderID() string {
+func (s *transactionService) GenerateOrderID() string {
 	return fmt.Sprintf("TIX-%s-%08d", time.Now().Format("20060102150405"), s.randomizer.Intn(99999999))
 }
 
@@ -45,7 +46,7 @@ func (s *transactionService) CreateTransaction(ctx context.Context, tx *gorm.DB,
 	}
 
 	for {
-		snapPayment.ExternalID = s.generateOrderID()
+		snapPayment.ExternalID = s.GenerateOrderID()
 		exist, err := s.snapPaymentRepository.ExternalIDExists(ctx, tx, snapPayment.ExternalID)
 		if err != nil {
 			return nil, err

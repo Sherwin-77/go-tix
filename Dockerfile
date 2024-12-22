@@ -16,6 +16,7 @@ WORKDIR /app
 
 COPY --from=builder /app/golang-server .
 COPY --from=builder /app/.env .
+COPY --from=builder /app/views ./views
 
 EXPOSE 8080
 

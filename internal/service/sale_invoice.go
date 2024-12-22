@@ -34,6 +34,7 @@ type saleInvoiceService struct {
 	saleInvoiceRepository repository.SaleInvoiceRepository
 	ticketRepository      repository.TicketRepository
 	transactionService    TransactionService
+	mailService           MailService
 	saleInvoiceBuilder    query.Builder
 	randomizer            *rand.Rand
 }
@@ -42,12 +43,14 @@ func NewSaleInvoiceService(
 	saleInvoiceRepository repository.SaleInvoiceRepository,
 	ticketRepository repository.TicketRepository,
 	transactionService TransactionService,
+	mailService MailService,
 	saleInvoiceBuilder query.Builder,
 ) SaleInvoiceService {
 	return &saleInvoiceService{
 		saleInvoiceRepository,
 		ticketRepository,
 		transactionService,
+		mailService,
 		saleInvoiceBuilder,
 		rand.New(rand.NewSource(time.Now().UnixNano())),
 	}
@@ -207,6 +210,21 @@ func (s *saleInvoiceService) Checkout(ctx context.Context, request dto.CheckoutR
 		err = s.saleInvoiceRepository.CreateSaleInvoice(ctx, tx, saleInvoice)
 		if err != nil {
 			return err
+		}
+
+		if saleInvoice.Total <= 0 {
+			metadata := saleInvoice.Metadata.Data()
+			// Auto complete, don't need to create snap payment
+			saleInvoice.Status = string(enum.SaleInvoiceStatusCompleted)
+			saleInvoice.Number = s.transactionService.GenerateOrderID()
+			if err = s.saleInvoiceRepository.UpdateSaleInvoice(ctx, tx, saleInvoice); err != nil {
+				return err
+			}
+			if err = s.mailService.SendTicket(metadata.Email, saleInvoice); err != nil {
+				return err
+			}
+
+			return nil
 		}
 
 		snapPayment, err := s.transactionService.CreateTransaction(ctx, tx, saleInvoice)
