@@ -224,6 +224,20 @@ func (h *UserHandler) Login(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, response.NewResponse(http.StatusOK, "Login Success", token, nil))
 }
 
+// ShowProfile
+//
+//	@Summary	Show Profile
+//	@Tags		User
+//	@Accept		json
+//	@Produce	json
+//	@Success	200	{object}	response.Response{data=dto.UserResponse}
+func (h *UserHandler) ShowProfile(ctx echo.Context) error {
+	userID := ctx.Get("user_id").(string)
+	ctx.SetParamNames("id")
+	ctx.SetParamValues(userID)
+	return h.GetUserByID(ctx)
+}
+
 // EditProfile
 //
 //	@Summary	Edit Profile
