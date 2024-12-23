@@ -28,6 +28,7 @@ type CheckoutRequestItem struct {
 /* -------------------------------------------------------------------------- */
 
 type SaleInvoiceListResponse struct {
+	ID            string    `json:"id"`
 	Number        string    `json:"number"`
 	Subtotal      float64   `json:"subtotal"`
 	Total         float64   `json:"total"`
@@ -42,6 +43,7 @@ type SaleInvoiceListResponse struct {
 }
 
 type SaleInvoiceResponse struct {
+	ID            string    `json:"id"`
 	Number        string    `json:"number"`
 	Subtotal      float64   `json:"subtotal"`
 	ServiceFee    float64   `json:"service_fee"`
@@ -93,6 +95,7 @@ func NewSaleInvoiceListResponse(saleInvoices []entity.SaleInvoice) []SaleInvoice
 
 	for _, saleInvoice := range saleInvoices {
 		response = append(response, SaleInvoiceListResponse{
+			ID:            saleInvoice.ID.String(),
 			Number:        saleInvoice.Number,
 			Subtotal:      saleInvoice.Subtotal,
 			Total:         saleInvoice.Total,
@@ -113,6 +116,7 @@ func NewSaleInvoiceListResponse(saleInvoices []entity.SaleInvoice) []SaleInvoice
 func NewSaleInvoiceResponse(saleInvoice *entity.SaleInvoice) *SaleInvoiceResponse {
 	metadata := saleInvoice.Metadata.Data()
 	response := &SaleInvoiceResponse{
+		ID:            saleInvoice.ID.String(),
 		Number:        saleInvoice.Number,
 		Subtotal:      saleInvoice.Subtotal,
 		ServiceFee:    saleInvoice.ServiceFee,
