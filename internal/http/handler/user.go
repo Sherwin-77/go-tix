@@ -252,16 +252,5 @@ func (h *UserHandler) EditProfile(ctx echo.Context) error {
 	// Inject user_id
 	ctx.SetParamNames("id")
 	ctx.SetParamValues(userID)
-
-	var req dto.UpdateUserRequest
-
-	if err := ctx.Bind(&req); err != nil {
-		return err
-	}
-
-	if err := ctx.Validate(req); err != nil {
-		return err
-	}
-
 	return h.UpdateUser(ctx)
 }
