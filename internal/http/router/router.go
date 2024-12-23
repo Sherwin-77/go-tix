@@ -49,12 +49,10 @@ func UserRoutes(
 			},
 		},
 		{
-			Method:  http.MethodGet,
-			Path:    "/events",
-			Handler: eventHandler.GetUserEvents,
-			Middlewares: []echo.MiddlewareFunc{
-				authMiddleware.Authenticated,
-			},
+			Method:      http.MethodGet,
+			Path:        "/events",
+			Handler:     eventHandler.GetUserEvents,
+			Middlewares: []echo.MiddlewareFunc{},
 		},
 		{
 			Method:  http.MethodGet,
