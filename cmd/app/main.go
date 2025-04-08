@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/labstack/echo/v4"
 	echoSwagger "github.com/swaggo/echo-swagger"
 	"os"
 	"os/signal"
@@ -41,6 +42,12 @@ func main() {
 	echoServer.GET("/swagger/*", echoSwagger.WrapHandler)
 	echoServer.Use(middleware.LoggerWithConfig(configs.GetEchoLoggerConfig()))
 	echoServer.Use(middleware.RecoverWithConfig(configs.GetEchoRecoverConfig()))
+	echoServer.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"}, // Or specify your frontend URL
+		AllowMethods: []string{echo.GET, echo.POST, echo.PUT, echo.DELETE, echo.OPTIONS},
+		AllowHeaders: []string{"Origin", "Content-Type", "Accept", "Authorization"},
+	}))
+
 	echoServer.Validator = configs.NewAppValidator()
 	echoServer.HTTPErrorHandler = handler.HTTPErrorHandler
 
