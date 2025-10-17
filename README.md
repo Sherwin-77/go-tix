@@ -11,6 +11,7 @@ docker compose up -d
 
 ## Migration
 Migration handled using [golang-migrate](https://github.com/golang-migrate/migrate). You need to [install](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate) it if not using docker
+
 Migration automatically run everytime docker container start
 1. To apply migration, run `make migrate` 
 2. To create migration, run `make migration name=migration_name`
